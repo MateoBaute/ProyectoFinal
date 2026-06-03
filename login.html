@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Inicio de Sesión</title>
+
+</head>
+
+<body>
+
+    <div class="login">
+
+        <h2 class="titulologin">Inicio de Sesión</h2>
+
+        <p class="parrafologin">Nombre de usuario</p>
+        <input type="text" name="User" id="Username" placeholder="Ingrese su usuario" required>
+
+        <p class="parrafologin">Contraseña</p>
+        <input type="password" name="Password" id="Password" placeholder="Ingrese su contraseña" required>
+
+        <p class="parrafologin">Correo Electrónico</p>
+        <input type="email" name="mail" id="Email" placeholder="ejemplo@correo.com" required>
+
+        <button class="botonlogin" onclick="login()">Iniciar</button>
+
+        <button class="botonback" onclick="location.href='./index.html'">Volver</button>
+
+        <p class="registerlink"> ¿No tienes cuenta? 
+        <a href="register.html">¡Regístrate haciendo clic aquí!</a>
+</p>
+    </div>
+   
+</body>
+<script src="/js/LoginScripts.js" defer></script>
+</html>

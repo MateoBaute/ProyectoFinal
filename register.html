@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <title>Registro</title>
+
+</head>
+
+<body>
+
+    <div class="login">
+
+        <h2 class="titulologin">Registro de Usuario</h2>
+
+        <p class="parrafologin">Nombre de usuario</p>
+        <input type="text" name="User" id="Username" placeholder="Ingrese un usuario" required>
+
+        <p class="parrafologin">Contraseña</p>
+        <input type="password" name="Password" id="Password" placeholder="Ingrese una contraseña" required>
+
+        <p class="parrafologin">Confirmar contraseña</p>
+        <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Repita la contraseña" required>
+
+        <p class="parrafologin">Correo Electrónico</p>
+        <input type="email" name="mail" id="Email" placeholder="ejemplo@correo.com" required>
+
+        <button class="botonlogin" onclick="register()">Registrarse</button>
+
+        <button class="botonback" onclick="location.href='login.html'">¿Ya tienes una cuenta?</button>
+
+    </div>
+
+</body>
+</html>
