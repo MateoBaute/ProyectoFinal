@@ -1,0 +1,51 @@
+/* NOSOTROS.HTML STYLES */
+
+/* Global Styles */
+body {
+    margin: 0;
+    font-family: Arial;
+    background-color: black;
+    color: white;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: black;
+    position: sticky;
+    top: 0;
+}
+
+.logo {
+    width: 60px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+    transition: 0.3s ease;
+}
+
+nav a:hover {
+    text-decoration: underline;
+    color: #b7b7b7
+}
+
+/* Button Styles */
+button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 20px;
+    margin-left: 20px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: darkred;
+}
