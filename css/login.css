@@ -1,20 +1,12 @@
 /* LOGIN.HTML STYLES */
 
-/* Global Styles */
-body {
-    margin: 0;
-    font-family: Arial;
-    background-color: black;
-    color: white;
-}
-
 /* Login Section Styles */
 .parrafologin {
     font-family: 'Times New Roman', Times, serif;
     margin: 8px 0 4px 0;
     text-align: left;
     font-weight: 600;
-    color: #222222;
+    color: var(--color-gray-text);
 }
 
 .login {
@@ -23,9 +15,9 @@ body {
     flex-direction: column;
     font-family: 'Times New Roman', Times, serif;
     margin: 80px auto;
-    border: 1px solid #d1d1d1;
+    border: 1px solid var(--color-gray-border-light);
     padding: 1.5rem;
-    background-color: #ffffff;
+    background-color: var(--color-white);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -34,24 +26,24 @@ body {
     margin: 0 auto 10px auto;
     padding: 10px;
     width: 90%;
-    border: 1px solid #bdbdbd;
+    border: 1px solid var(--color-gray-border);
     border-radius: 5px;
-    background-color: #f5f5f5;
-    color: #222222;
+    background-color: var(--color-gray-bg);
+    color: var(--color-gray-text);
     transition: 0.3s;
 }
 
 .login input:focus {
     outline: none;
-    border-color: #c62828;
-    background-color: #ffffff;
+    border-color: var(--color-primary);
+    background-color: var(--color-white);
     box-shadow: 0 0 5px rgba(198, 40, 40, 0.3);
 }
 
 .botonlogin {
     margin: 1rem auto;
-    background-color: #c62828;
-    color: white;
+    background-color: var(--color-primary);
+    color: var(--color-white);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -62,7 +54,7 @@ body {
 }
 
 .botonlogin:hover {
-    background-color: #a61f1f;
+    background-color: var(--color-primary-dark);
 }
 
 .registerlink {
@@ -71,7 +63,7 @@ body {
 }
 
 .registerlink a {
-    color: #c62828;
+    color: var(--color-primary);
     font-weight: bold;
     text-decoration: none;
 }
@@ -82,8 +74,8 @@ body {
 
 .botonback {
     margin: 0.5rem auto;
-    background-color: #555555;
-    color: white;
+    background-color: var(--color-gray-dark);
+    color: var(--color-white);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -94,20 +86,6 @@ body {
 }
 
 .botonback:hover {
-    background-color: #333333;
+    background-color: var(--color-gray-darker);
 }
 
-/* Button Styles */
-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 12px 15px;
-    border-radius: 20px;
-    margin-left: 20px;
-    transition: 0.3s ease;
-}
-
-button:hover {
-    background-color: darkred;
-}
