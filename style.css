@@ -1,15 +1,33 @@
+:root{
+    --color-bg: #000000;
+    --color-text: #ffffff;
+    --color-muted: #b7b7b7;
+    --color-button: red;
+    --color-button-dark: darkred;
+    --color-overlay: rgba(0, 0, 0, 0.733);
+    --color-surface: #ffffff;
+    --color-surface-border: #d1d1d1;
+    --color-input-border: #bdbdbd;
+    --color-input-bg: #f5f5f5;
+    --color-input-text: #222222;
+    --color-accent: #c62828;
+    --color-accent-dark: #a61f1f;
+    --color-back-button: #555555;
+    --color-back-button-dark: #333333;
+}
+
 body{
     margin: 0;
     font-family: Arial;
-    background-color: black;
-    color: white;
+    background-color: var(--color-bg);
+    color: var(--color-text);
 }
 header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background-color: black;
+    background-color: var(--color-bg);
     position: sticky;
     top: 0;
 }
@@ -17,7 +35,7 @@ header{
     width: 60px;
 }
 nav a{
-    color: white;
+    color: var(--color-text);
     text-decoration: none;
     margin-left: 20px;
     transition: 0.3s ease;
@@ -25,7 +43,7 @@ nav a{
 
 nav a:hover{
     text-decoration: underline;
-    color: #b7b7b7
+    color: var(--color-muted);
 }
 .hero{
     position: relative;
@@ -61,13 +79,13 @@ nav a:hover{
 }
 .overlay{
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.733);
+    background-color: var(--color-overlay);
     padding: 30px;
     border-radius: 10px;
 }
 button{
-    background-color: red;
-    color: white;
+    background-color: var(--color-button);
+    color: var(--color-text);
     border: none;
     padding: 12px 15px;
     border-radius: 20px;
@@ -75,7 +93,7 @@ button{
     transition: 0.3s ease;
 }
 button:hover{
-    background-color: darkred;
+    background-color: var(--color-button-dark);
 }
 
 .parrafologin {
@@ -83,7 +101,7 @@ button:hover{
     margin: 8px 0 4px 0;
     text-align: left;
     font-weight: 600;
-    color: #222222;
+    color: var(--color-input-text);
 }
 
 .login {
@@ -92,9 +110,9 @@ button:hover{
     flex-direction: column;
     font-family: 'Times New Roman', Times, serif;
     margin: 80px auto;
-    border: 1px solid #d1d1d1;
+    border: 1px solid var(--color-surface-border);
     padding: 1.5rem;
-    background-color: #ffffff;
+    background-color: var(--color-surface);
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
@@ -103,24 +121,24 @@ button:hover{
     margin: 0 auto 10px auto;
     padding: 10px;
     width: 90%;
-    border: 1px solid #bdbdbd;
+    border: 1px solid var(--color-input-border);
     border-radius: 5px;
-    background-color: #f5f5f5;
-    color: #222222;
+    background-color: var(--color-input-bg);
+    color: var(--color-input-text);
     transition: 0.3s;
 }
 
 .login input:focus {
     outline: none;
-    border-color: #c62828;
-    background-color: #ffffff;
+    border-color: var(--color-accent);
+    background-color: var(--color-surface);
     box-shadow: 0 0 5px rgba(198, 40, 40, 0.3);
 }
 
 .botonlogin {
     margin: 1rem auto;
-    background-color: #c62828;
-    color: white;
+    background-color: var(--color-accent);
+    color: var(--color-text);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -131,7 +149,7 @@ button:hover{
 }
 
 .botonlogin:hover {
-    background-color: #a61f1f;
+    background-color: var(--color-accent-dark);
 }
 
 .registerlink{
@@ -140,7 +158,7 @@ button:hover{
 }
 
 .registerlink a{
-    color: #c62828;
+    color: var(--color-accent);
     font-weight: bold;
     text-decoration: none;
 }
@@ -151,8 +169,8 @@ button:hover{
 
 .botonback {
     margin: 0.5rem auto;
-    background-color: #555555;
-    color: white;
+    background-color: var(--color-back-button);
+    color: var(--color-text);
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -163,5 +181,5 @@ button:hover{
 }
 
 .botonback:hover {
-    background-color: #333333;
+    background-color: var(--color-back-button-dark);
 }
