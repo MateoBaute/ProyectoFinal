@@ -1,0 +1,90 @@
+/* CSS VARIABLES - COLORES */
+:root {
+    /* Colores primarios */
+    --color-black: black;
+    --color-white: white;
+
+    /* Colores de acento */
+    --color-red: red;
+    --color-darkred: darkred;
+    --color-primary: #c62828;
+    --color-primary-dark: #a61f1f;
+
+    /* Grises */
+    --color-gray-dark: #555555;
+    --color-gray-darker: #333333;
+    --color-gray-light: #b7b7b7;
+    --color-gray-text: #222222;
+    --color-gray-border-light: #d1d1d1;
+    --color-gray-border: #bdbdbd;
+    --color-gray-bg: #f5f5f5;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+    background-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/* Header y Navegación */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: var(--color-black);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    width: 60px;
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.1);
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.main-nav a {
+    color: var(--color-white);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.main-nav a:hover {
+    text-decoration: underline;
+    color: var(--color-gray-light);
+}
+
+.main-nav button {
+    margin-left: 20px;
+}
+
+/* Button Styles */
+button {
+    background-color: var(--color-red);
+    color: var(--color-white);
+    border: none;
+    padding: 12px 15px;
+    border-radius: 20px;
+    margin-left: 20px;
+    transition: 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--color-darkred);
+}
+
+h1 {
+    color: var(--color-white);
+    text-align: center;
+}
