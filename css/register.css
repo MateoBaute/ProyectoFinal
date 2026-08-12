@@ -2,7 +2,10 @@
 
 /* Login Section Styles */
 .parrafologin {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
     margin: 8px 0 4px 0;
     text-align: left;
     font-weight: 600;
@@ -13,7 +16,7 @@
     max-width: 320px;
     display: flex;
     flex-direction: column;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Source Sans 3", sans-serif;
     margin: 80px auto;
     border: 1px solid var(--color-gray-border-light);
     padding: 1.5rem;
@@ -88,4 +91,3 @@
 .botonback:hover {
     background-color: var(--color-gray-darker);
 }
-
