@@ -24,6 +24,17 @@ switch ($action) {
     case 'obtener_rutinas':
         echo json_encode(obtenerRutinas());
         break;
+    case 'registrar':
+        $nombre = $_GET['nombre'] ?? '';
+        $email = $_GET['email'] ?? '';
+        $password = $_GET['contraseña'] ?? '';
+
+        if ($nombre && $email && $password) {
+            echo json_encode(registrar($nombre, $email, $password));
+        } else {
+            echo json_encode(['success' => false, 'error' => 'Datos incompletos']);
+        }
+        break;
     default:
         echo json_encode(['success' => false, 'error' => 'Acción no válida']);
         break;

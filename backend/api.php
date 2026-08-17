@@ -86,4 +86,30 @@ function obtenerRutinas()
     return array_values($rutinas);
 }
 
+function registrar($nombre, $email, $password)
+{
+    $conn = conectar();
+
+    // Verificar si el correo ya está registrado
+    $stmtCheck = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
+    $stmtCheck->bind_param("s", $email);
+    $stmtCheck->execute();
+    $stmtCheck->store_result();
+
+    if ($stmtCheck->num_rows > 0) {
+        return ['success' => false, 'error' => 'El correo ya está registrado'];
+    }
+
+    // Insertar nuevo usuario
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $stmtInsert = $conn->prepare("INSERT INTO usuarios(nombre, email, contraseña) VALUES (?, ?, ?)");
+    $stmtInsert->bind_param("sss", $nombre, $email, $hashedPassword);
+
+    if ($stmtInsert->execute()) {
+        return ['success' => true];
+    } else {
+        return ['success' => false, 'error' => 'Error al registrar el usuario'];
+    }
+}
+
 ?>
