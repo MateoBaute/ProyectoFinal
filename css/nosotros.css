@@ -1,3 +1,19 @@
 /* NOSOTROS.HTML STYLES */
 
 /* Esta página no necesita estilos adicionales porque root.css ya define la base global. */
+.nosotros {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 1.5rem;
+    background-color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    font-family: "Source Sans 3", sans-serif;
+    color: var(--color-gray-text);
+}
+
+
+.image {
+    margin: auto 16.5rem;
+    
+}
