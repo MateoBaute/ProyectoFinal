@@ -2,7 +2,11 @@
 
 /* Login Section Styles */
 .parrafologin {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Source Sans 3", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
     margin: 8px 0 4px 0;
     text-align: left;
     font-weight: 600;
@@ -13,7 +17,7 @@
     max-width: 320px;
     display: flex;
     flex-direction: column;
-    font-family: 'Times New Roman', Times, serif;
+    font-family: "Source Sans 3", sans-serif;
     margin: 80px auto;
     border: 1px solid var(--color-gray-border-light);
     padding: 1.5rem;
@@ -41,7 +45,7 @@
 }
 
 .botonlogin {
-    margin: 1rem auto;
+    margin: 1rem auto 5px auto;
     background-color: var(--color-primary);
     color: var(--color-white);
     padding: 10px 20px;
@@ -59,13 +63,15 @@
 
 .registerlink {
     text-align: center;
-    margin-top: 15px;
+    margin: 7px auto 0 auto;
+    color: var(--color-gray-text);
 }
 
-.registerlink a {
+.a {
     color: var(--color-primary);
     font-weight: bold;
     text-decoration: none;
+    text-align: center;
 }
 
 .registerlink a:hover {
@@ -89,3 +95,18 @@
     background-color: var(--color-gray-darker);
 }
 
+.background {
+    background-color: var(--color-gray-bg);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.titulologin {
+    text-align: center;
+    font-family: "Source Sans 3", sans-serif;
+    font-weight: 700;
+    color: var(--color-gray-text);
+    margin: 5px auto 5px auto;
+}
