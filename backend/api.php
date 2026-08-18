@@ -112,4 +112,38 @@ function registrar($nombre, $email, $password)
     }
 }
 
+function login($email, $password)
+{
+    $conn = conectar();
+
+    // 1. Preparar la consulta
+    $stmt = $conn->prepare("SELECT id, nombre, contraseña FROM usuarios WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+
+    // 2. Si no existe el correo, usamos el mismo mensaje de error por seguridad
+    if ($stmt->num_rows === 0) {
+        $stmt->close();
+        $conn->close();
+        return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
+    }
+
+    // 3. Obtener los datos
+    $stmt->bind_result($id, $nombre, $hashedPassword);
+    $stmt->fetch();
+
+    // 4. Cerrar recursos de inmediato
+    $stmt->close();
+    $conn->close();
+
+    // 5. Verificar la contraseña de forma segura
+    if ($hashedPassword && password_verify($password, $hashedPassword)) {
+        return ['success' => true, 'id' => $id, 'nombre' => $nombre];
+    } 
+
+    return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
+}
+
+
 ?>
