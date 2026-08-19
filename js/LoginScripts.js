@@ -1,6 +1,10 @@
 function login() {
-    let password = document.getElementById("Password").value;
-    let email = document.getElementById("Email").value;
+
+    const inputPass = document.getElementById("Password");
+    const inputEmail = document.getElementById("Email");
+
+    let password = inputPass.value;
+    let email = inputEmail.value;
 
     if (password === "" || email === "") {
         alert("Complete todos los campos.");
@@ -19,6 +23,9 @@ function login() {
                 alert("Inicio de sesión correcto");
                 sessionStorage.setItem("user", JSON.stringify(user));
                 sessionStorage.setItem("islogged", "true");
+                inputPass.value = "";
+                inputEmail.value = "";
+                window.location.href = "index.html";
             }
         });
 }
