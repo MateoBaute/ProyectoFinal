@@ -1,24 +1,24 @@
 function login() {
-    let username = document.getElementById("Username").value;
     let password = document.getElementById("Password").value;
     let email = document.getElementById("Email").value;
 
-    if (username === "" || password === "" || email === "") {
+    if (password === "" || email === "") {
         alert("Complete todos los campos.");
         return;
     }
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=login&email=${email}&contraseña=${password}`;
 
-    let user = {
-        name: username,
-        pass: password,
-        mail: email
-    };
-
-    sessionStorage.setItem("user", JSON.stringify(user));
-    sessionStorage.setItem("islogged", "true");
-
-    console.log(user);
-
-    alert("Inicio de sesión correcto");
-    window.location.href = "index.html";
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                let user = {
+                    name: data.nombre,
+                    mail: email
+                };
+                alert("Inicio de sesión correcto");
+                sessionStorage.setItem("user", JSON.stringify(user));
+                sessionStorage.setItem("islogged", "true");
+            }
+        });
 }
