@@ -69,6 +69,60 @@ header {
     margin-left: 20px;
 }
 
+.user-menu {
+    position: relative;
+}
+
+.user-menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 20px;
+}
+
+.user-menu-toggle svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2;
+}
+
+.user-menu-options {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    min-width: 150px;
+    padding: 8px 0;
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-border);
+    border-radius: 8px;
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.3);
+    z-index: 20;
+}
+
+.user-menu-options a,
+.user-menu-options button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 10px 16px;
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-gray-text);
+    text-align: left;
+    text-decoration: none;
+}
+
+.user-menu-options a:hover,
+.user-menu-options button:hover {
+    background-color: var(--color-gray-bg);
+    color: var(--color-primary-dark);
+}
+
 /* Button Styles */
 button {
     background-color: var(--color-red);

@@ -7,6 +7,7 @@
         <link rel="icon" href="img/logo.png">
     <link rel="stylesheet" href="./root.css">
     <link rel="stylesheet" href="./css/nosotros.css">
+    
 </head>
 <body>
      <header>
@@ -16,10 +17,37 @@
             <a href="./nosotros.html">Nosotros</a>
             <a href="./rutinas.html">Rutinas</a>
             <a href="./tienda.html">Tienda</a>
-            <button onclick="location.href='./login.html'">Iniciar Sesion</button>
+            <button id="loginButton" type="button" onclick="location.href='./login.html'">Iniciar Sesion</button>
+            <div class="user-menu" id="userMenu" hidden>
+                <button class="user-menu-toggle" id="userMenuToggle" type="button" aria-expanded="false" aria-controls="userMenuOptions" title="Abrir menu de usuario">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"></path>
+                    </svg>
+                    <span id="userName">Usuario</span>
+                </button>
+                <div class="user-menu-options" id="userMenuOptions" hidden>
+                    <a href="./perfil.html">Perfil</a>
+                    <button id="logoutButton" type="button">Cerrar sesion</button>
+                </div>
+            </div>
         </nav>
     </header>
 
-    <h1>Nosotros</h1>
+
+    <div class="nosotros-card">
+        <div class="content">
+            <h2>Somos Valhalla Gym</h2>
+            <p>En Valhalla Gym, nos apasiona ayudarte a alcanzar tus objetivos de fitness y bienestar. Nuestro equipo de entrenadores altamente capacitados está aquí para guiarte en cada paso de tu viaje hacia una vida más saludable y activa.</p>
+            <p>Ofrecemos una amplia variedad de clases, programas de entrenamiento personalizados y un ambiente motivador para que te sientas inspirado a dar lo mejor de ti. Ya sea que estés buscando perder peso, ganar músculo o simplemente mantenerte en forma, tenemos las herramientas y el apoyo que necesitas.</p>
+            <p>Únete a nuestra comunidad y descubre cómo Valhalla Gym puede transformar tu vida. ¡Te esperamos!</p>
+        </div>
+        <div class="image">
+            <img src="img/logo.png" alt="Imagen de logo de Valhalla Gym">
+        </div>
+    </div>
+
+
+    <script src="./js/user-menu.js" defer></script>
 </body>
 </html>

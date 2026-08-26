@@ -44,7 +44,7 @@
 }
 
 .botonlogin {
-    margin: 1rem auto;
+    margin: 5px auto 5px auto;
     background-color: var(--color-primary);
     color: var(--color-white);
     padding: 10px 20px;
@@ -76,7 +76,7 @@
 }
 
 .botonback {
-    margin: 0.5rem auto;
+    margin: 5px auto 5px auto;
     background-color: var(--color-gray-dark);
     color: var(--color-white);
     padding: 10px 20px;
@@ -90,4 +90,12 @@
 
 .botonback:hover {
     background-color: var(--color-gray-darker);
+}
+
+.titulologin {
+    text-align: center;
+    font-family: "Source Sans 3", sans-serif;
+    font-weight: 700;
+    color: var(--color-gray-text);
+    margin: 5px auto 5px auto;
 }

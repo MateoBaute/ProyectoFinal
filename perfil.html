@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/logo.png">
+    <link rel="stylesheet" href="./root.css">
+    <link rel="stylesheet" href="./css/perfil.css">
+    <title>Mi perfil | Valhalla Gym</title>
+</head>
+<body>
+    <header>
+        <a href="./index.html" aria-label="Volver al inicio">
+            <img src="img/logo.png" alt="Logo de Valhalla Gym" class="logo">
+        </a>
+        <nav class="main-nav" aria-label="Navegacion principal">
+            <a href="./index.html">Inicio</a>
+            <a href="./nosotros.html">Nosotros</a>
+            <a href="./rutinas.html">Rutinas</a>
+            <a href="./tienda.html">Tienda</a>
+        </nav>
+    </header>
+
+    <main class="profile-page">
+        <section class="profile-hero" aria-labelledby="profile-title">
+            <div class="profile-avatar" aria-hidden="true">
+                <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"></path>
+                    </svg>
+            </div>
+            <div>
+                <p class="eyebrow">MI CUENTA</p>
+                <h1 id="profile-title">Perfil de <span id="userName">Usuario</span></h1>
+                <p class="profile-subtitle">Tu informacion personal y trayectoria dentro de Valhalla Gym.</p>
+                <p class="profile-status" id="profileStatus" role="status" hidden></p>
+            </div>
+            <button class="edit-button" id="editProfileButton" type="button">
+                <span aria-hidden="true">&#9998;</span>
+                Editar perfil
+            </button>
+        </section>
+
+        <div class="profile-grid">
+            <section class="profile-section profile-data" aria-labelledby="data-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">INFORMACION PERSONAL</p>
+                        <h2 id="data-title">Mis datos</h2>
+                    </div>
+                    <div class="profile-actions">
+                        <button class="cancel-button" id="cancelChangesButton" type="button" hidden>Cancelar</button>
+                        <button class="confirm-button" id="confirmChangesButton" type="button" hidden>Confirmar cambios</button>
+                    </div>
+                </div>
+                <dl class="data-list">
+                    <div>
+                        <dt>Nombre completo</dt>
+                        <dd id="profileFullName">Usuario</dd>
+                        <input type="text" id="nameInput" placeholder="Ingresa tu nombre completo" aria-label="Ingresa tu nombre completo" hidden>
+                    </div>
+                    <div>
+                        <dt>Correo electronico</dt>
+                        <dd id="profileEmail">No disponible</dd>
+                        <input type="email" id="emailInput" placeholder="Ingresa tu correo electronico" aria-label="Ingresa tu correo electronico" hidden>
+                    </div>
+                </dl>
+            </section>
+
+            <section class="profile-section" aria-labelledby="description-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">PRESENTACION</p>
+                        <h2 id="description-title">Descripcion</h2>
+                    </div>
+                </div>
+                <p class="empty-state">Aun no agregaste una descripcion. Cuenta un poco sobre vos, tus objetivos y lo que te motiva a entrenar.</p>
+                <p class="description-display" id="descriptionDisplay" hidden></p>
+                <textarea id="descriptionInput" placeholder="Agrega una descripcion sobre vos" aria-label="Agrega una descripcion sobre vos" hidden></textarea>
+            </section>
+
+            <section class="profile-section curriculum-section" aria-labelledby="curriculum-title">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-kicker">EXPERIENCIA</p>
+                        <h2 id="curriculum-title">Curriculum</h2>
+                    </div>
+                </div>
+                <div class="curriculum-empty">
+                    <p id="curriculumDisplay" rel="noopener" hidden></p>
+                    <p class="empty-state" id="curriculumEmptyState">Aun no agregaste un link a tu curriculum.</p>
+                    <input type="url" id="curriculumLink" placeholder="Agrega un link a tu curriculum" aria-label="Agrega un link a tu curriculum" hidden>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="./js/perfil.js" defer></script>
+</body>
+</html>
