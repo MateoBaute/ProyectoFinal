@@ -17,11 +17,25 @@
             <a href="./nosotros.html">Nosotros</a>
             <a href="./rutinas.html">Rutinas</a>
             <a href="./tienda.html">Tienda</a>
-            <button onclick="location.href='./login.html'">Iniciar Sesion</button>
+            <button id="loginButton" type="button" onclick="location.href='./login.html'">Iniciar Sesion</button>
+            <div class="user-menu" id="userMenu" hidden>
+                <button class="user-menu-toggle" id="userMenuToggle" type="button" aria-expanded="false" aria-controls="userMenuOptions" title="Abrir menu de usuario">
+                    <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                        <circle cx="12" cy="8" r="4"></circle>
+                        <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"></path>
+                    </svg>
+                    <span id="userName">Usuario</span>
+                </button>
+                <div class="user-menu-options" id="userMenuOptions" hidden>
+                    <a href="./perfil.html">Perfil</a>
+                    <button id="logoutButton" type="button">Cerrar sesion</button>
+                </div>
+            </div>
         </nav>
     </header>
 
     <h1>Rutinas</h1>
+    <script src="./js/user-menu.js" defer></script>
 </body>
 
 </html>
