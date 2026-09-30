@@ -11,7 +11,11 @@
 
 <body>
     <header>
-        <img src="img/logo.png" alt="Logo de Valhalla Gym" class="logo">
+
+        <a href="./index.html" class="logo">
+            <img src="img/logo.png" alt="Logo de Valhalla Gym" class="logo">
+        </a>
+
         <nav class="main-nav">
             <a href="./index.html">Inicio</a>
             <a href="./nosotros.html">Nosotros</a>
@@ -19,7 +23,8 @@
             <a href="./tienda.html">Tienda</a>
             <button id="loginButton" type="button" onclick="location.href='./login.html'">Iniciar Sesion</button>
             <div class="user-menu" id="userMenu" hidden>
-                <button class="user-menu-toggle" id="userMenuToggle" type="button" aria-expanded="false" aria-controls="userMenuOptions" title="Abrir menu de usuario">
+                <button class="user-menu-toggle" id="userMenuToggle" type="button" aria-expanded="false"
+                    aria-controls="userMenuOptions" title="Abrir menu de usuario">
                     <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
                         <circle cx="12" cy="8" r="4"></circle>
                         <path d="M4 21c0-4.42 3.58-8 8-8s8 3.58 8 8"></path>
@@ -36,7 +41,7 @@
 
     <div id="contenedor-rutinas"></div>
 
-  
+
 
 
     <script src="./js/user-menu.js" defer></script>
