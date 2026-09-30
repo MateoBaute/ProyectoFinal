@@ -32,3 +32,264 @@
     padding: 30px;
     border-radius: 10px;
 }
+/* =========================================
+   CONTENEDOR PRINCIPAL
+========================================= */
+
+#contenedor-rutinas {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    padding: 70px 0;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+
+/* =========================================
+   CARD DE RUTINA
+========================================= */
+
+#contenedor-rutinas > div {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
+    min-height: 350px;
+
+    padding: 30px;
+
+    background: #111111;
+
+    border: 1px solid #292929;
+    border-left: 3px solid #e50914;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        border-color 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+
+/* Línea decorativa superior */
+
+#contenedor-rutinas > div::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 2px;
+
+    background: #e50914;
+
+    transform: scaleX(0);
+    transform-origin: left;
+
+    transition: transform 0.3s ease;
+}
+
+
+/* Efecto hover */
+
+#contenedor-rutinas > div:hover {
+    transform: translateY(-7px);
+
+    border-color: #3a3a3a;
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.45),
+        0 0 20px rgba(229, 9, 20, 0.05);
+}
+
+#contenedor-rutinas > div:hover::before {
+    transform: scaleX(1);
+}
+
+
+/* =========================================
+   TITULO
+========================================= */
+
+#contenedor-rutinas h2 {
+    margin: 0 0 15px;
+
+    color: #ffffff;
+
+    font-size: 25px;
+    font-weight: 800;
+
+    line-height: 1.2;
+
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+}
+
+
+/* Línea roja debajo del título */
+
+#contenedor-rutinas h2::after {
+    content: "";
+
+    display: block;
+
+    width: 35px;
+    height: 3px;
+
+    margin-top: 12px;
+
+    background: #e50914;
+}
+
+
+/* =========================================
+   DESCRIPCIÓN
+========================================= */
+
+#contenedor-rutinas p {
+    margin: 0 0 25px;
+
+    color: #999999;
+
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   LISTA DE EJERCICIOS
+========================================= */
+
+#contenedor-rutinas ul {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+
+/* =========================================
+   EJERCICIO
+========================================= */
+
+#contenedor-rutinas li {
+    position: relative;
+
+    padding: 12px 15px 12px 35px;
+
+    background: #181818;
+
+    border: 1px solid #252525;
+
+    color: #d0d0d0;
+
+    font-size: 13px;
+    line-height: 1.5;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* Punto rojo */
+
+#contenedor-rutinas li::before {
+    content: "";
+
+    position: absolute;
+
+    top: 50%;
+    left: 14px;
+
+    width: 6px;
+    height: 6px;
+
+    background: #e50914;
+
+    transform: translateY(-50%);
+
+    border-radius: 50%;
+}
+
+
+/* Hover ejercicio */
+
+#contenedor-rutinas li:hover {
+    background: #202020;
+
+    border-color: #3a3a3a;
+
+    transform: translateX(4px);
+}
+
+
+/* =========================================
+   RESPONSIVE - TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+
+    #contenedor-rutinas {
+        grid-template-columns: repeat(2, 1fr);
+
+        width: 90%;
+    }
+
+}
+
+
+/* =========================================
+   RESPONSIVE - CELULAR
+========================================= */
+
+@media (max-width: 650px) {
+
+    #contenedor-rutinas {
+        width: 90%;
+
+        grid-template-columns: 1fr;
+
+        padding: 45px 0;
+
+        gap: 20px;
+    }
+
+
+    #contenedor-rutinas > div {
+        min-height: auto;
+
+        padding: 25px;
+    }
+
+
+    #contenedor-rutinas h2 {
+        font-size: 22px;
+    }
+
+
+    #contenedor-rutinas p {
+        font-size: 13px;
+    }
+
+
+    #contenedor-rutinas li {
+        font-size: 12px;
+    }
+
+}
