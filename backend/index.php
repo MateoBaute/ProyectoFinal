@@ -86,6 +86,19 @@ switch ($action) {
         echo json_encode(obtenerProductos());
         break;
 
+    case 'comprar_producto':
+        $usuario_id = $_GET['usuario_id'] ?? 0;
+        $producto_id = $_GET['producto_id'] ?? 0;
+        $fecha = date('Y-m-d H:i:s');
+
+        if ($usuario_id > 0 && $producto_id > 0) {
+            echo json_encode(registrarCompra($usuario_id, $producto_id, $fecha));
+        } else {
+            http_response_code(400); 
+            echo json_encode(['success' => false, 'error' => 'Datos de compra incompletos o inválidos']);
+        }
+        break;
+
     default:
         http_response_code(404); 
         echo json_encode(['success' => false, 'error' => 'Acción no válida']);

@@ -111,5 +111,14 @@ function obtenerProductos()
     return $res->fetch_all(MYSQLI_ASSOC);
 }
 
+function registrarCompra($usuario_id, $producto_id, $fecha){
+    $conn = conectar();
+    $sql = "INSERT INTO compras(usuario_id, producto_id, fecha) VALUES (?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt ->bind_param("iis", $usuario_id, $producto_id, $fecha);
+    return $stmt->execute();
+}
+
 
 ?>
