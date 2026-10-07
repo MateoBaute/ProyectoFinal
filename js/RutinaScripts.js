@@ -20,7 +20,6 @@ function mostrarRutinas(rutinas) {
     rutinas.forEach(rutina => {
         const card = document.createElement("div");
 
-        // Armamos manualmente los 5 posibles slots de ejercicio
         let listaEjercicios = "";
 
         for (let i = 1; i <= 5; i++) {
@@ -28,7 +27,6 @@ function mostrarRutinas(rutinas) {
             const series = rutina[`series${i}`];
             const reps = rutina[`reps${i}`];
 
-            // Solo lo mostramos si el slot tiene un ejercicio cargado
             if (nombreEjercicio) {
                 listaEjercicios += `<li>${nombreEjercicio}: ${series} series de ${reps} repeticiones</li>`;
             }
