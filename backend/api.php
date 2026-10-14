@@ -120,5 +120,13 @@ function registrarCompra($usuario_id, $producto_id, $fecha){
     return $stmt->execute();
 }
 
+function actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum){
+    
+    $conn = conectar();
+    $sql = "UPDATE usuarios SET nombre = ?, email = ?, descripción  = ?, cv = ? WHERE id = ?";
 
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ssssi", $nombre, $email, $descripcion, $curriculum, $usuario_id);
+    return $stmt->execute();
+}
 ?>

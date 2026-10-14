@@ -106,37 +106,37 @@ addEventListener("DOMContentLoaded", () => {
     });
 
     confirmChangesButton.addEventListener("click", () => {
-        const newValues = {
-            name: nameInput.value.trim(),
-            mail: emailInput.value.trim(),
-            description: descriptionInput.value.trim(),
-            curriculum: curriculumLink.value.trim()
-        };
-        const changedFields = Object.keys(newValues).filter((field) => newValues[field] !== (user[field] || ""));
+        const name = nameInput.value
+        const mail = emailInput.value
+        const description = descriptionInput.value
+        const curriculum = curriculumLink.value
 
-        if (changedFields.length === 0) {
-            alert("No se modifico ningun campo.");
-            return;
-        }
+        confirmarCambios(usuario_id, name, mail, description, curriculum);
 
-        const fieldNames = {
-            name: "Nombre",
-            mail: "Correo electronico",
-            description: "Descripcion",
-            curriculum: "Curriculum"
-        };
-        const changes = changedFields.map((field) => `${fieldNames[field]}: ${newValues[field] || "(vacio)"}`).join("\n");
-
-        if (!confirm(`Estas seguro que quieres editar estos campos?\n\n${changes}`)) {
-            return;
-        }
-
-        const updatedUser = { ...user, ...newValues };
-        sessionStorage.removeItem("user");
-        sessionStorage.setItem("user", JSON.stringify(updatedUser));
-
-        user = updatedUser;
-        showProfileView(updatedUser);
-        console.log("Nuevo objeto del usuario:", updatedUser);
     });
 });
+
+function confirmarCambios(usuario_id, name, mail, description, curriculum) {
+
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=cambios_perfil&usuario_id=${usuario_id}&nombre=${name}&email=${mail}&descripcion=${description}&curriculum=${curriculum}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Cambios guardados correctamente.");
+                const updatedUser = {
+                    name: name,
+                    mail: mail,
+                    description: description,
+                    curriculum: curriculum
+                };
+                sessionStorage.setItem("user", JSON.stringify(updatedUser));
+                showProfileView(updatedUser);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Error al guardar los cambios.");
+        });
+}
