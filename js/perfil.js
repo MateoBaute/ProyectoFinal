@@ -30,22 +30,22 @@ addEventListener("DOMContentLoaded", () => {
         user = null;
     }
 
-    if (!user || typeof user !== "object" || !user.name && !user.mail) {
+    if (!user || typeof user !== "object" || !user.nombre && !user.email) {
         profileStatus.textContent = "Usuario no logueado o usuario no encontrado.";
         profileStatus.hidden = false;
         return;
     }
 
-    const name = user.name || "Usuario no encontrado";
-    const email = user.mail || "No disponible";
+    const name = user.nombre || "Usuario no encontrado";
+    const email = user.email || "No disponible";
 
     userName.textContent = name;
     profileFullName.textContent = name;
     profileEmail.textContent = email;
 
     nameInput.value = name === "Usuario no encontrado" ? "" : name;
-    emailInput.value = user.mail || "";
-    descriptionInput.value = user.description || "";
+    emailInput.value = user.email || "";
+    descriptionInput.value = user.descripción || "";
     curriculumLink.value = user.curriculum || "";
 
     const showSavedProfileData = (profile) => {
@@ -98,9 +98,9 @@ addEventListener("DOMContentLoaded", () => {
     });
 
     cancelChangesButton.addEventListener("click", () => {
-        nameInput.value = user.name || "";
-        emailInput.value = user.mail || "";
-        descriptionInput.value = user.description || "";
+        nameInput.value = user.nombre || "";
+        emailInput.value = user.email || "";
+        descriptionInput.value = user.descripción || "";
         curriculumLink.value = user.curriculum || "";
         showProfileView(user);
     });

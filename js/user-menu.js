@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     loginButton.hidden = true;
     userMenu.hidden = false;
-    userName.textContent = user.name || "Usuario";
+    userName.textContent = user.nombre || "Usuario";
 
     userMenuToggle.addEventListener("click", () => {
         const isOpen = userMenuToggle.getAttribute("aria-expanded") === "true";

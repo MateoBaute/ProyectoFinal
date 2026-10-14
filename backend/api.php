@@ -60,26 +60,27 @@ function login($email, $password)
 {
     $conn = conectar();
 
-    $stmt = $conn->prepare("SELECT id, nombre, contraseña FROM usuarios WHERE email = ?");
+    $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
-    $stmt->store_result();
 
-    if ($stmt->num_rows === 0) {
-        $stmt->close();
-        $conn->close();
-        return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
-    }
-
-    $stmt->bind_result($id, $nombre, $hashedPassword);
-    $stmt->fetch();
+    $usuario = $stmt->get_result()->fetch_assoc();
 
     $stmt->close();
     $conn->close();
 
+    if (!$usuario) {
+        return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
+    }
+
+    $hashedPassword = $usuario['contraseña'];
+
     if ($hashedPassword && password_verify($password, $hashedPassword)) {
-        return ['success' => true, 'id' => $id, 'nombre' => $nombre];
-    } 
+
+        unset($usuario['contraseña'], $usuario['reset_token'], $usuario['reset_expira']);
+
+        return ['success' => true, 'usuario' => $usuario];
+    }
 
     return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
 }
