@@ -98,6 +98,20 @@ switch ($action) {
             echo json_encode(['success' => false, 'error' => 'Datos de compra incompletos o inválidos']);
         }
         break;
+    case 'cambios_perfil':
+        $usuario_id = $_GET['usuario_id'] ?? 0;
+        $nombre = $_GET['nombre'] ?? '';
+        $email = $_GET['email'] ?? '';
+        $descripcion = $_GET['descripcion'] ?? '';
+        $curriculum = $_GET['curriculum'] ?? '';
+
+        if ($usuario_id > 0 && $nombre && $email && $descripcion) {
+            echo json_encode(actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum));
+        } else {
+            http_response_code(400); 
+            echo json_encode(['success' => false, 'error' => 'Datos de perfil incompletos o inválidos']);
+        }
+        break;
 
     default:
         http_response_code(404); 
