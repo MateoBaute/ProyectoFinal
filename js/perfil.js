@@ -110,7 +110,8 @@ addEventListener("DOMContentLoaded", () => {
         const mail = emailInput.value
         const description = descriptionInput.value
         const curriculum = curriculumLink.value
-
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        const usuario_id = user.id
         confirmarCambios(usuario_id, name, mail, description, curriculum);
 
     });
