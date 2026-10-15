@@ -50,11 +50,21 @@ function registrar($nombre, $email, $password)
     $stmtInsert->bind_param("sss", $nombre, $email, $hashedPassword);
 
     if ($stmtInsert->execute()) {
-        return ['success' => true];
+        $nuevo_id = $stmtInsert->insert_id; 
+        
+        return [
+            'success' => true,
+            'usuario' => [
+                'id' => $nuevo_id,
+                'nombre' => $nombre,
+                'email' => $email
+            ]
+        ];
     } else {
         return ['success' => false, 'error' => 'Error al registrar el usuario'];
     }
 }
+
 
 function login($email, $password)
 {
@@ -121,13 +131,17 @@ function registrarCompra($usuario_id, $producto_id, $fecha){
     return $stmt->execute();
 }
 
-function actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum){
-    
+function actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum) {
     $conn = conectar();
-    $sql = "UPDATE usuarios SET nombre = ?, email = ?, descripción  = ?, cv = ? WHERE id = ?";
+    $sql = "UPDATE usuarios SET nombre = ?, email = ?, descripción = ?, cv = ? WHERE id = ?";
 
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssi", $nombre, $email, $descripcion, $curriculum, $usuario_id);
-    return $stmt->execute();
+    
+    if ($stmt->execute()) {
+        return ['success' => true];
+    } else {
+        return ['success' => false, 'error' => 'No se pudieron actualizar los datos en la base de datos.'];
+    }
 }
 ?>

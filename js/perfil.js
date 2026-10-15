@@ -2,6 +2,7 @@ addEventListener("DOMContentLoaded", () => {
     const userName = document.getElementById("userName");
     const profileFullName = document.getElementById("profileFullName");
     const profileEmail = document.getElementById("profileEmail");
+    const profileDescription = document.getElementById("profileDescription");
     const profileStatus = document.getElementById("profileStatus");
     const editProfileButton = document.getElementById("editProfileButton");
     const confirmChangesButton = document.getElementById("confirmChangesButton");
@@ -38,15 +39,19 @@ addEventListener("DOMContentLoaded", () => {
 
     const name = user.nombre || "Usuario no encontrado";
     const email = user.email || "No disponible";
+    const description = user.descripción || "Aun no agregaste una descripcion.";
+    const curriculum = user.cv || null;
 
     userName.textContent = name;
     profileFullName.textContent = name;
     profileEmail.textContent = email;
+    profileDescription.textContent = description;
+    curriculumEmptyState.textContent = curriculum || `Aun no agregaste una descripcion. Cuenta un poco sobre vos, tus objetivos y lo que te motiva a entrenar.`;
 
     nameInput.value = name === "Usuario no encontrado" ? "" : name;
     emailInput.value = user.email || "";
     descriptionInput.value = user.descripción || "";
-    curriculumLink.value = user.curriculum || "";
+    curriculumLink.value = user.cv || "";
 
     const showSavedProfileData = (profile) => {
         descriptionDisplay.textContent = profile.description || "Aun no agregaste una descripcion.";
@@ -106,38 +111,41 @@ addEventListener("DOMContentLoaded", () => {
     });
 
     confirmChangesButton.addEventListener("click", () => {
-        const name = nameInput.value
-        const mail = emailInput.value
-        const description = descriptionInput.value
-        const curriculum = curriculumLink.value
-        const user = JSON.parse(sessionStorage.getItem("user"));
-        const usuario_id = user.id
+        const name = nameInput.value;
+        const mail = emailInput.value;
+        const description = descriptionInput.value;
+        const curriculum = curriculumLink.value;
+        const userObj = JSON.parse(sessionStorage.getItem("user"));
+        const usuario_id = userObj.id;
         confirmarCambios(usuario_id, name, mail, description, curriculum);
-
     });
-});
 
-function confirmarCambios(usuario_id, name, mail, description, curriculum) {
+    // Moviendo esta función AQUÍ adentro soluciona el ReferenceError y el flujo de los alerts
+    function confirmarCambios(usuario_id, name, mail, description, curriculum) {
+        const url = `http://localhost/ProyectoFinal/backend/index.php?action=cambios_perfil&usuario_id=${usuario_id}&nombre=${name}&email=${mail}&descripcion=${description}&curriculum=${curriculum}`;
 
-    const url = `http://localhost/ProyectoFinal/backend/index.php?action=cambios_perfil&usuario_id=${usuario_id}&nombre=${name}&email=${mail}&descripcion=${description}&curriculum=${curriculum}`;
-
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert("Cambios guardados correctamente.");
-                const updatedUser = {
-                    name: name,
-                    mail: mail,
-                    description: description,
-                    curriculum: curriculum
-                };
-                sessionStorage.setItem("user", JSON.stringify(updatedUser));
-                showProfileView(updatedUser);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Error al guardar los cambios.");
-        });
-}
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert("Cambios guardados correctamente.");
+                    const updatedUser = {
+                        id: usuario_id,
+                        name: name,
+                        mail: mail,
+                        description: description,
+                        curriculum: curriculum
+                    };
+                    sessionStorage.removeItem("user");
+                    sessionStorage.setItem("user", JSON.stringify(updatedUser));
+                    showProfileView(updatedUser);
+                } else {
+                    alert("Error: " + (data.error || "No se pudieron guardar los cambios."));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Error al guardar los cambios.");
+            });
+    }
+}); 
