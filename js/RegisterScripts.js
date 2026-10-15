@@ -6,8 +6,7 @@ function register(event) {
     const confirmPassword = document.getElementById('ConfirmPassword')?.value;    
     const email = document.getElementById('Email')?.value?.trim();
 
-
-    if (!username ||  !password  ||!confirmPassword||!email ) {
+    if (!username || !password || !confirmPassword || !email) {
         alert('Por favor completa todos los campos.');
         return false;
     }
@@ -20,22 +19,26 @@ function register(event) {
         return false;
     }
 
-    const usersRaw = sessionStorage.getItem('users');
-    const users = usersRaw ? JSON.parse(usersRaw) : [];
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=registrar&nombre=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&contraseña=${encodeURIComponent(password)}`;
 
-    const exists = users.some(u => u.email.toLowerCase() === email.toLowerCase());
-    if (exists) {
-        alert('Ya existe un usuario con ese correo.');
-        return false;
-    }
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                sessionStorage.setItem("user", JSON.stringify(data.usuario));
+                sessionStorage.setItem("islogged", "true");
 
-    const newUser = { username, email, password };
-    users.push(newUser);
+                alert("Usuario registrado e inicio de sesión correcto.");
+                
+                window.location.href = "index.html";
+            } else {
+                alert(data.error); 
+            }
+        })
+        .catch(error => {
+            console.error('Error en el registro:', error);
+            alert("Ocurrió un error al intentar registrar el usuario.");
+        });
 
-    sessionStorage.setItem('users', JSON.stringify(users));
-
-    sessionStorage.setItem('currentUser', JSON.stringify({ username, email }));
-
-    window.location.href = 'login.html';
     return true;
 }
