@@ -39,7 +39,7 @@ addEventListener("DOMContentLoaded", () => {
 
     const name = user.nombre || "Usuario no encontrado";
     const email = user.email || "No disponible";
-    const description = user.descripción || "Aun no agregaste una descripcion.";
+    const description = user.description || "Aun no agregaste una descripcion.";
     const curriculum = user.cv || null;
 
     userName.textContent = name;
@@ -50,7 +50,7 @@ addEventListener("DOMContentLoaded", () => {
 
     nameInput.value = name === "Usuario no encontrado" ? "" : name;
     emailInput.value = user.email || "";
-    descriptionInput.value = user.descripción || "";
+    descriptionInput.value = user.description || "";
     curriculumLink.value = user.cv || "";
 
     const showSavedProfileData = (profile) => {
@@ -71,9 +71,9 @@ addEventListener("DOMContentLoaded", () => {
     };
 
     const showProfileView = (profile) => {
-        userName.textContent = profile.name || "Usuario no encontrado";
-        profileFullName.textContent = profile.name || "Usuario no encontrado";
-        profileEmail.textContent = profile.mail || "No disponible";
+        userName.textContent = profile.nombre || "Usuario no encontrado";
+        profileFullName.textContent = profile.nombre || "Usuario no encontrado";
+        profileEmail.textContent = profile.email || "No disponible";
         profileFullName.hidden = false;
         profileEmail.hidden = false;
         nameInput.hidden = true;
@@ -105,7 +105,7 @@ addEventListener("DOMContentLoaded", () => {
     cancelChangesButton.addEventListener("click", () => {
         nameInput.value = user.nombre || "";
         emailInput.value = user.email || "";
-        descriptionInput.value = user.descripción || "";
+        descriptionInput.value = user.description || "";
         curriculumLink.value = user.curriculum || "";
         showProfileView(user);
     });
@@ -131,14 +131,14 @@ addEventListener("DOMContentLoaded", () => {
                     alert("Cambios guardados correctamente.");
                     const updatedUser = {
                         id: usuario_id,
-                        name: name,
-                        mail: mail,
+                        nombre: name,
+                        email: mail,
                         description: description,
-                        curriculum: curriculum
+                        cv: curriculum
                     };
-                    sessionStorage.removeItem("user");
                     sessionStorage.setItem("user", JSON.stringify(updatedUser));
-                    showProfileView(updatedUser);
+                    user = updatedUser;
+                    showProfileView(user);
                 } else {
                     alert("Error: " + (data.error || "No se pudieron guardar los cambios."));
                 }
