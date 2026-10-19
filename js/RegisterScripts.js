@@ -42,3 +42,9 @@ function register(event) {
 
     return true;
 }
+
+addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+        register();
+    }
+});

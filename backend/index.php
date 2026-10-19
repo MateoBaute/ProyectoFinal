@@ -105,7 +105,7 @@ switch ($action) {
         $descripcion = $_GET['descripcion'] ?? '';
         $curriculum = $_GET['curriculum'] ?? '';
 
-        if ($usuario_id > 0 && $nombre && $email && $descripcion) {
+        if ($usuario_id > 0 && $nombre && $email) {
             echo json_encode(actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum));
         } else {
             http_response_code(400); 

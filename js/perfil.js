@@ -18,6 +18,8 @@ addEventListener("DOMContentLoaded", () => {
     const isLogged = sessionStorage.getItem("islogged") === "true";
     const curriculumEmptyState = document.getElementById("curriculumEmptyState");
 
+    const defaultCurriculumText = "Aun no agregaste una descripcion. Cuenta un poco sobre vos, tus objetivos y lo que te motiva a entrenar.";
+
     if (!isLogged || !storedUser) {
         profileStatus.textContent = "Usuario no logueado o usuario no encontrado.";
         profileStatus.hidden = false;
@@ -31,7 +33,7 @@ addEventListener("DOMContentLoaded", () => {
         user = null;
     }
 
-    if (!user || typeof user !== "object" || !user.nombre && !user.email) {
+    if (!user || typeof user !== "object" || (!user.nombre && !user.email)) {
         profileStatus.textContent = "Usuario no logueado o usuario no encontrado.";
         profileStatus.hidden = false;
         return;
@@ -46,7 +48,7 @@ addEventListener("DOMContentLoaded", () => {
     profileFullName.textContent = name;
     profileEmail.textContent = email;
     profileDescription.textContent = description;
-    curriculumEmptyState.textContent = curriculum || `Aun no agregaste una descripcion. Cuenta un poco sobre vos, tus objetivos y lo que te motiva a entrenar.`;
+    curriculumEmptyState.textContent = curriculum || defaultCurriculumText;
 
     nameInput.value = name === "Usuario no encontrado" ? "" : name;
     emailInput.value = user.email || "";
@@ -58,14 +60,15 @@ addEventListener("DOMContentLoaded", () => {
         descriptionDisplay.hidden = false;
         emptyState.hidden = true;
 
-        if (profile.curriculum) {
-            curriculumDisplay.href = profile.curriculum;
-            curriculumDisplay.textContent = profile.curriculum;
+        if (profile.cv) {
+            curriculumDisplay.href = profile.cv;
+            curriculumDisplay.textContent = profile.cv;
             curriculumDisplay.hidden = false;
             curriculumEmptyState.hidden = true;
         } else {
             curriculumDisplay.hidden = true;
             curriculumDisplay.textContent = "Agregar Curriculum aquí";
+            curriculumEmptyState.textContent = defaultCurriculumText;
             curriculumEmptyState.hidden = false;
         }
     };
@@ -74,6 +77,8 @@ addEventListener("DOMContentLoaded", () => {
         userName.textContent = profile.nombre || "Usuario no encontrado";
         profileFullName.textContent = profile.nombre || "Usuario no encontrado";
         profileEmail.textContent = profile.email || "No disponible";
+        profileDescription.textContent = profile.description || "Aun no agregaste una descripcion.";
+
         profileFullName.hidden = false;
         profileEmail.hidden = false;
         nameInput.hidden = true;
@@ -83,7 +88,6 @@ addEventListener("DOMContentLoaded", () => {
         confirmChangesButton.hidden = true;
         cancelChangesButton.hidden = true;
         editProfileButton.hidden = false;
-        curriculumEmptyState.hidden = false;
         showSavedProfileData(profile);
     };
 
@@ -106,7 +110,7 @@ addEventListener("DOMContentLoaded", () => {
         nameInput.value = user.nombre || "";
         emailInput.value = user.email || "";
         descriptionInput.value = user.description || "";
-        curriculumLink.value = user.curriculum || "";
+        curriculumLink.value = user.cv || "";
         showProfileView(user);
     });
 
@@ -120,9 +124,13 @@ addEventListener("DOMContentLoaded", () => {
         confirmarCambios(usuario_id, name, mail, description, curriculum);
     });
 
-    // Moviendo esta función AQUÍ adentro soluciona el ReferenceError y el flujo de los alerts
     function confirmarCambios(usuario_id, name, mail, description, curriculum) {
-        const url = `http://localhost/ProyectoFinal/backend/index.php?action=cambios_perfil&usuario_id=${usuario_id}&nombre=${name}&email=${mail}&descripcion=${description}&curriculum=${curriculum}`;
+        const url = `http://localhost/ProyectoFinal/backend/index.php?action=cambios_perfil`
+            + `&usuario_id=${encodeURIComponent(usuario_id)}`
+            + `&nombre=${encodeURIComponent(name)}`
+            + `&email=${encodeURIComponent(mail)}`
+            + `&descripcion=${encodeURIComponent(description)}`
+            + `&curriculum=${encodeURIComponent(curriculum)}`;
 
         fetch(url)
             .then(response => response.json())
@@ -148,4 +156,4 @@ addEventListener("DOMContentLoaded", () => {
                 alert("Error al guardar los cambios.");
             });
     }
-}); 
+});
