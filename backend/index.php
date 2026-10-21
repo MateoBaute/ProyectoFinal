@@ -113,6 +113,10 @@ switch ($action) {
         }
         break;
 
+    case 'obtener_usuarios':
+        echo json_encode(obtenerUsuarios());
+        break;
+
     default:
         http_response_code(404); 
         echo json_encode(['success' => false, 'error' => 'Acción no válida']);

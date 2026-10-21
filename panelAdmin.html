@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
+    <link rel="stylesheet" href="root.css">
+    <link rel="stylesheet" href="./css/panelAdmin.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="header-left">
+            <img src="./img/logo.png" alt="Logo" class="logo">
+        </div>
+        <h1>Panel de Control</h1>
+        <nav class="main-nav">
+            <a href="./index.html">Volver al Inicio</a>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+
+        <aside class="admin-sidebar">
+            <nav class="sidebar-nav">
+                <button onclick="fetchRutinas()" class="active" data-section="rutinas">💪 Rutinas</button>
+                <button onclick="fetchProductos()" data-section="productos">📦 Productos</button>
+                <button onclick="fetchUsuarios()" data-section="usuarios">👤 Usuarios</button>
+            </nav>
+        </aside>
+
+        <main class="admin-main">
+
+            <div class="main-header">
+                <h2>Panel de Administración</h2>
+            </div>
+            <div id="contenidoPanelAdmin"></div>
+        </main>
+    </div>
+
+    <script src="./js/panelAdmin.js"></script>
+</body>
+
+</html>

@@ -144,4 +144,13 @@ function actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculu
         return ['success' => false, 'error' => 'No se pudieron actualizar los datos en la base de datos.'];
     }
 }
+
+function obtenerUsuarios() {
+    $conn = conectar();
+    $sql = "SELECT  * FROM usuarios";
+
+    $res = $conn->query($sql);
+
+    return $res->fetch_all(MYSQLI_ASSOC);
+}
 ?>
