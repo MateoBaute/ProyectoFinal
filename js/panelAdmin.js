@@ -1,4 +1,13 @@
-document.addEventListener("DOMContentLoaded", fetchRutinas);
+document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.admin) { 
+        alert("Acceso denegado. Debes ser un administrador para acceder a esta página.");
+        setTimeout(() => {
+            window.location.href = "index.html";
+        },200);
+    }
+});
+
 
 function setActiveSection(section) {
     document.querySelectorAll(".sidebar-nav button").forEach(button => {
