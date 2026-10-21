@@ -44,3 +44,22 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const userAdmin = JSON.parse(sessionStorage.getItem("user")) || {};
+
+    if(userAdmin.admin){
+        const adminLink = document.createElement("a");
+        adminLink.href = "./panelAdmin.html";
+        adminLink.textContent = "Admin";
+        
+        const userMenuOptions = document.getElementById("userMenuOptions");
+        const logoutButton = document.getElementById("logoutButton"); 
+
+        if (logoutButton) {
+            userMenuOptions.insertBefore(adminLink, logoutButton);
+        } else {
+            userMenuOptions.appendChild(adminLink);
+        }
+    }
+});
