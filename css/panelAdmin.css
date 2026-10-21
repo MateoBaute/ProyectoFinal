@@ -97,7 +97,16 @@ body {
     align-items: stretch;
 }
 
-#contenidoPanelAdmin > div {
+#contenidoPanelAdmin > #btns {
+    grid-column: 1 / -1;
+}
+
+#contenidoPanelAdmin > #contenido {
+    display: contents;
+}
+
+#contenidoPanelAdmin > div:not(#btns):not(#contenido),
+#contenidoPanelAdmin > #contenido > div {
     position: relative;
     display: flex;
     min-width: 0;
@@ -113,7 +122,8 @@ body {
     transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 
-#contenidoPanelAdmin > div:hover {
+#contenidoPanelAdmin > div:not(#btns):not(#contenido):hover,
+#contenidoPanelAdmin > #contenido > div:hover {
     transform: translateY(-5px);
     border-color: #4a3030;
     border-top-color: #ef4444;
@@ -155,29 +165,145 @@ body {
     overflow-wrap: anywhere;
 }
 
-#contenidoPanelAdmin > div > button {
-    width: 100%;
-    margin: auto 0 0;
-    padding: 11px 16px;
-    border: 1px solid var(--color-primary);
-    border-radius: 6px;
+.btn-admin {
+    margin: 0;
+    padding: 12px 20px;
+    border: 1px solid #ef4444;
+    border-radius: 7px;
     background: var(--color-primary);
     color: var(--color-white);
     font: inherit;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-#contenidoPanelAdmin > div > button:hover {
+.btn-admin:hover {
     transform: translateY(-1px);
     border-color: var(--color-primary-dark);
     background: var(--color-primary-dark);
+    box-shadow: 0 7px 18px rgba(198, 40, 40, 0.25);
 }
 
-#contenidoPanelAdmin > div > button:focus-visible {
+.btn-admin:focus-visible,
+#contenidoPanelAdmin > div:not(#btns):not(#contenido) > button:focus-visible,
+#contenidoPanelAdmin > #contenido > div > button:focus-visible {
     outline: 3px solid rgba(255, 255, 255, 0.75);
     outline-offset: 3px;
+}
+
+#contenidoPanelAdmin > div:not(#btns):not(#contenido) > button,
+#contenidoPanelAdmin > #contenido > div > button {
+    width: 100%;
+    margin: auto 0 0;
+    padding: 10px 14px;
+    border: 1px solid #813030;
+    border-radius: 6px;
+    background: #351919;
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+#contenidoPanelAdmin > div:not(#btns):not(#contenido) > button:hover,
+#contenidoPanelAdmin > #contenido > div > button:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+}
+
+.routine-dialog {
+    width: min(620px, calc(100% - 32px));
+    max-width: none;
+    max-height: min(85vh, 760px);
+    padding: 0;
+    border: 1px solid #383838;
+    border-radius: 10px;
+    background: #151515;
+    color: #eee;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.65);
+}
+
+.routine-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.78);
+    backdrop-filter: blur(3px);
+}
+
+.routine-form {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+}
+
+.routine-form h2 {
+    margin: 0;
+    color: #fff;
+}
+
+.routine-form label,
+.routine-form fieldset {
+    display: grid;
+    gap: 7px;
+}
+
+.routine-form label {
+    color: #d0d0d0;
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.routine-form input,
+.routine-form select {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+    padding: 9px 11px;
+    border: 1px solid #414141;
+    border-radius: 5px;
+    background: #202020;
+    color: #f5f5f5;
+    font: inherit;
+}
+
+.routine-form input:focus,
+.routine-form select:focus {
+    border-color: var(--color-primary);
+    outline: 2px solid rgba(198, 40, 40, 0.3);
+}
+
+.routine-form fieldset {
+    grid-template-columns: minmax(0, 1fr) 100px 100px;
+    padding: 12px;
+    border: 1px solid #303030;
+    border-radius: 6px;
+}
+
+.routine-form legend {
+    padding: 0 6px;
+    color: #f0f0f0;
+    font-weight: 700;
+}
+
+.routine-form .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.routine-form .form-actions button {
+    margin: 0;
+}
+
+.routine-form .btn-cancel {
+    border: 1px solid #454545;
+    background: #242424;
+}
+
+.routine-form .form-message {
+    min-height: 1.4em;
+    margin: 0;
+    color: #ff9b9b;
 }
 
 /* Grid de Tarjetas Informativas */
@@ -306,6 +432,26 @@ body {
     height: 600px;
     border: none;
 }
+
+/* .btn-admin{
+    width: 100%;
+    margin: auto 0 0;
+    padding: 11px 16px;
+    border: 1px solid var(--color-primary);
+    border-radius: 6px;
+    background: var(--color-primary);
+    color: var(--color-white);
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.btn-admin:hover {
+    transform: translateY(-1px);
+    border-color: var(--color-primary-dark);
+    background: var(--color-primary-dark);
+} */
 
 /* --- RESPONSIVO --- */
 @media (max-width: 768px) {
