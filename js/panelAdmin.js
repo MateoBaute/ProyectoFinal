@@ -4,7 +4,9 @@ document.addEventListener("DOMContentLoaded", () => {
         alert("Acceso denegado. Debes ser un administrador para acceder a esta página.");
         setTimeout(() => {
             window.location.href = "index.html";
-        },200);
+        },100);
+    }else{
+        fetchRutinas();
     }
 });
 
@@ -30,9 +32,18 @@ function fetchRutinas() {
 
 
 function mostrarRutinas(rutinas) {
-
-    const contenedor = document.getElementById("contenidoPanelAdmin");
+    const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
+
+    const contenedorBoton = document.getElementById("btns");
+    contenedorBoton.innerHTML = "";
+    const btnAgregarRutina = document.createElement("button");
+    btnAgregarRutina.textContent = "Agregar Rutina";
+    btnAgregarRutina.classList.add("btn-admin");
+    contenedorBoton.appendChild(btnAgregarRutina);
+
+    btnAgregarRutina.addEventListener("click", agregarRutina);
+
 
     rutinas.forEach(rutina => {
         const card = document.createElement("div");
@@ -61,6 +72,10 @@ function mostrarRutinas(rutinas) {
     });
 }
 
+function agregarRutina() {
+    alert("Función para agregar rutina aún no implementada.");
+}
+
 function eliminarRutina(id) {
     //lógica de eliminar Rutina
     alert(`Se eliminará la rutina con ID: ${id}`);
@@ -81,8 +96,18 @@ function fetchProductos() {
 }
 
 function mostrarProductos(productos) {
-    const contenedor = document.getElementById("contenidoPanelAdmin");
+    const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
+
+    
+    const contenedorBoton = document.getElementById("btns");
+    contenedorBoton.innerHTML = "";
+    const btnAgregarProducto = document.createElement("button");
+    btnAgregarProducto.textContent = "Agregar Producto";
+    btnAgregarProducto.classList.add("btn-admin");
+    contenedorBoton.appendChild(btnAgregarProducto);
+
+    btnAgregarProducto.addEventListener("click", agregarProducto);
 
     productos.forEach(producto => {
         const card = document.createElement("div");
@@ -110,6 +135,10 @@ function mostrarProductos(productos) {
     });
 }
 
+function agregarProducto() {
+    alert("Función para agregar producto aún no implementada.");
+}
+
 function eliminarProducto(id) {
     //Lógica de eliminar producto
     alert(`Se eliminará el producto con ID: ${id}`);
@@ -128,8 +157,12 @@ function fetchUsuarios() {
 }
 
 function mostrarUsuarios(usuarios) {
-    const contenedor = document.getElementById("contenidoPanelAdmin");
+    const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
+
+    const contenedorBoton = document.getElementById("btns");
+    contenedorBoton.innerHTML = "";
+
     
     if(usuarios.length === 0) {
         contenedor.innerHTML = "<p>No hay usuarios disponibles.</p>";
@@ -144,15 +177,8 @@ function mostrarUsuarios(usuarios) {
                 <p>${usuario.email}</p>
                 <p>Descripción: ${usuario.description || "No disponible"}</p>
                 <p>CV Link: ${usuario.cv}</p>
-                <button onclick="eliminarUsuario(${usuario.id})">Eliminar</button>
             `;
             contenedor.appendChild(card);
         }
     });
-}
-
-
-function eliminarUsuario(id) {
-    //Lógica de eliminar usuario
-    alert(`Se eliminará el usuario con ID: ${id}`);
 }
