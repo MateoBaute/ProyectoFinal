@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/config/db.php';
-function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercicio2, $series2, $reps2, $ejercicio3, $series3, $reps3, $ejercicio4, $series4, $reps4, $ejercicio5, $series5, $reps5)
-{
+function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercicio2, $series2, $reps2, $ejercicio3, $series3, $reps3, $ejercicio4, $series4, $reps4, $ejercicio5, $series5, $reps5){
     $conn = conectar();
 
     $stmt = $conn->prepare(
@@ -22,8 +21,7 @@ function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercici
     return $stmt->execute();
 }
 
-function obtenerRutinas()
-{
+function obtenerRutinas(){
     $conn = conectar();
     $sql = "SELECT * from rutinas";
 
@@ -32,8 +30,17 @@ function obtenerRutinas()
     return $res->fetch_all(MYSQLI_ASSOC);
 }
 
-function registrar($nombre, $email, $password)
-{
+function eliminarRutina($id){
+    $conn = conectar();
+    $sql = "DELETE FROM rutinas WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    return $stmt->execute();
+}
+
+function registrar($nombre, $email, $password){
     $conn = conectar();
 
     $stmtCheck = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
@@ -66,8 +73,7 @@ function registrar($nombre, $email, $password)
 }
 
 
-function login($email, $password)
-{
+function login($email, $password){
     $conn = conectar();
 
     $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");

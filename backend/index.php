@@ -43,6 +43,10 @@ switch ($action) {
         echo json_encode(obtenerRutinas());
         break;
 
+    case 'eliminar_rutina':
+        $id = $_GET['id'] ?? 0;
+        echo json_encode(eliminarRutina($id));
+        break;
     case 'registrar':
         $nombre = $_GET['nombre'] ?? '';
         $email = $_GET['email'] ?? '';
