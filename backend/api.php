@@ -128,6 +128,16 @@ function obtenerProductos()
     return $res->fetch_all(MYSQLI_ASSOC);
 }
 
+function eliminarProducto($id){
+    $conn = conectar();
+    $sql = "DELETE FROM productos WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    return $stmt->execute();
+}
+
 function registrarCompra($usuario_id, $producto_id, $fecha){
     $conn = conectar();
     $sql = "INSERT INTO compras(usuario_id, producto_id, fecha) VALUES (?, ?, ?)";
