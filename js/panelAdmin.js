@@ -192,8 +192,21 @@ function agregarRutina() {
 }
 
 function eliminarRutina(id) {
-    //lógica de eliminar Rutina
-    alert(`Se eliminará la rutina con ID: ${id}`);
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=eliminar_rutina&id=${id}`;
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("No se pudo eliminar la rutina.");
+            }
+            return response.json();
+        })
+        .then(() => {
+            alert("Rutina eliminada correctamente.");
+            fetchRutinas();
+        })
+        .catch(error => {
+            alert(error.message || "Ocurrió un error al eliminar la rutina.");
+        });
 }
 
 
