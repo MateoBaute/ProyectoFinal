@@ -83,15 +83,15 @@ function agregarRutina() {
                 <legend>Ejercicio ${numero}</legend>
                 <label>
                     Nombre
-                    <input name="ejercicio${numero}" type="text" maxlength="45" required>
+                    <input id="rutinaEjercicio${numero}" name="ejercicio${numero}" type="text" maxlength="45" required>
                 </label>
                 <label>
                     Series
-                    <input name="series${numero}" type="number" min="1" required>
+                    <input id="rutinaSeries${numero}" name="series${numero}" type="number" min="1" required>
                 </label>
                 <label>
                     Repeticiones
-                    <input name="reps${numero}" type="number" min="1" required>
+                    <input id="rutinaReps${numero}" name="reps${numero}" type="number" min="1" required>
                 </label>
             </fieldset>
         `;
@@ -102,11 +102,11 @@ function agregarRutina() {
             <h2>Nueva rutina</h2>
             <label>
                 Nombre de la rutina
-                <input name="nombre" type="text" maxlength="45" required>
+                <input id="rutinaNombre" name="nombre" type="text" maxlength="45" required>
             </label>
             <label>
                 Nivel
-                <input name="nivel" type="text" maxlength="45" required>
+                <input id="rutinaNivel" name="nivel" type="text" maxlength="45" required>
             </label>
             ${ejercicios}
             <p class="form-message" role="alert" aria-live="polite"></p>
@@ -125,30 +125,66 @@ function agregarRutina() {
     botonCancelar.addEventListener("click", () => dialog.close());
     dialog.addEventListener("close", () => dialog.remove(), { once: true });
 
-    form.addEventListener("submit", async event => {
+    form.addEventListener("submit", event => {
         event.preventDefault();
         mensaje.textContent = "";
         botonGuardar.disabled = true;
         botonCancelar.disabled = true;
 
-        const parametros = new URLSearchParams(new FormData(form));
-        parametros.set("action", "agregar_rutina");
+        const nombre = document.getElementById("rutinaNombre").value;
+        const nivel = document.getElementById("rutinaNivel").value;
+        const ejercicio1 = document.getElementById("rutinaEjercicio1").value;
+        const series1 = document.getElementById("rutinaSeries1").value;
+        const reps1 = document.getElementById("rutinaReps1").value;
+        const ejercicio2 = document.getElementById("rutinaEjercicio2").value;
+        const series2 = document.getElementById("rutinaSeries2").value;
+        const reps2 = document.getElementById("rutinaReps2").value;
+        const ejercicio3 = document.getElementById("rutinaEjercicio3").value;
+        const series3 = document.getElementById("rutinaSeries3").value;
+        const reps3 = document.getElementById("rutinaReps3").value;
+        const ejercicio4 = document.getElementById("rutinaEjercicio4").value;
+        const series4 = document.getElementById("rutinaSeries4").value;
+        const reps4 = document.getElementById("rutinaReps4").value;
+        const ejercicio5 = document.getElementById("rutinaEjercicio5").value;
+        const series5 = document.getElementById("rutinaSeries5").value;
+        const reps5 = document.getElementById("rutinaReps5").value;
 
-        try {
-            const response = await fetch(`http://localhost/ProyectoFinal/backend/index.php?${parametros}`);
-            const data = await response.json();
+        const url = `http://localhost/ProyectoFinal/backend/index.php?action=agregar_rutina`
+            + `&nombre=${encodeURIComponent(nombre)}`
+            + `&nivel=${encodeURIComponent(nivel)}`
+            + `&ejercicio1=${encodeURIComponent(ejercicio1)}`
+            + `&series1=${encodeURIComponent(series1)}`
+            + `&reps1=${encodeURIComponent(reps1)}`
+            + `&ejercicio2=${encodeURIComponent(ejercicio2)}`
+            + `&series2=${encodeURIComponent(series2)}`
+            + `&reps2=${encodeURIComponent(reps2)}`
+            + `&ejercicio3=${encodeURIComponent(ejercicio3)}`
+            + `&series3=${encodeURIComponent(series3)}`
+            + `&reps3=${encodeURIComponent(reps3)}`
+            + `&ejercicio4=${encodeURIComponent(ejercicio4)}`
+            + `&series4=${encodeURIComponent(series4)}`
+            + `&reps4=${encodeURIComponent(reps4)}`
+            + `&ejercicio5=${encodeURIComponent(ejercicio5)}`
+            + `&series5=${encodeURIComponent(series5)}`
+            + `&reps5=${encodeURIComponent(reps5)}`;
 
-            if (!response.ok || data !== true) {
-                throw new Error(data.error || "No se pudo guardar la rutina.");
-            }
-
-            dialog.close();
-            fetchRutinas();
-        } catch (error) {
-            mensaje.textContent = error.message || "Ocurrió un error al guardar la rutina.";
-            botonGuardar.disabled = false;
-            botonCancelar.disabled = false;
-        }
+        fetch(url)
+            .then(response => response.json().then(data => {
+                if (!response.ok || data !== true) {
+                    throw new Error((data && data.error) || "No se pudo guardar la rutina.");
+                }
+                return data;
+            }))
+            .then(() => {
+                dialog.close();
+                alert("Rutina agregada correctamente.");
+                fetchRutinas();
+            })
+            .catch(error => {
+                mensaje.textContent = error.message || "Ocurrió un error al guardar la rutina.";
+                botonGuardar.disabled = false;
+                botonCancelar.disabled = false;
+            });
     });
 
     document.body.appendChild(dialog);
@@ -222,19 +258,19 @@ function agregarProducto() {
             <h2>Nuevo producto</h2>
             <label>
                 Nombre
-                <input name="nombre" type="text" maxlength="45" required>
+                <input id="productoNombre" name="nombre" type="text" maxlength="45" required>
             </label>
             <label>
                 Descripción
-                <input name="descripcion" type="text" required>
+                <input id="productoDescripcion" name="descripcion" type="text" required>
             </label>
             <label>
                 Precio
-                <input name="precio" type="number" min="0.01" step="0.01" required>
+                <input id="productoPrecio" name="precio" type="number" min="0.01" step="0.01" required>
             </label>
             <label>
                 Stock
-                <input name="stock" type="number" min="0" step="1" required>
+                <input id="productoStock" name="stock" type="number" min="0" step="1" required>
             </label>
             <p class="form-message" role="alert" aria-live="polite"></p>
             <div class="form-actions">
@@ -252,30 +288,40 @@ function agregarProducto() {
     botonCancelar.addEventListener("click", () => dialog.close());
     dialog.addEventListener("close", () => dialog.remove(), { once: true });
 
-    form.addEventListener("submit", async event => {
+    form.addEventListener("submit", event => {
         event.preventDefault();
         mensaje.textContent = "";
         botonGuardar.disabled = true;
         botonCancelar.disabled = true;
 
-        const parametros = new URLSearchParams(new FormData(form));
-        parametros.set("action", "nuevo_producto");
+        const nombre = document.getElementById("productoNombre").value;
+        const descripcion = document.getElementById("productoDescripcion").value;
+        const precio = document.getElementById("productoPrecio").value;
+        const stock = document.getElementById("productoStock").value;
 
-        try {
-            const response = await fetch(`http://localhost/ProyectoFinal/backend/index.php?${parametros}`);
-            const data = await response.json();
+        const url = `http://localhost/ProyectoFinal/backend/index.php?action=nuevo_producto`
+            + `&nombre=${encodeURIComponent(nombre)}`
+            + `&descripcion=${encodeURIComponent(descripcion)}`
+            + `&precio=${encodeURIComponent(precio)}`
+            + `&stock=${encodeURIComponent(stock)}`;
 
-            if (!response.ok || data !== true) {
-                throw new Error(data.error || "No se pudo guardar el producto.");
-            }
-
-            dialog.close();
-            fetchProductos();
-        } catch (error) {
-            mensaje.textContent = error.message || "Ocurrió un error al guardar el producto.";
-            botonGuardar.disabled = false;
-            botonCancelar.disabled = false;
-        }
+        fetch(url)
+            .then(response => response.json().then(data => {
+                if (!response.ok || data !== true) {
+                    throw new Error((data && data.error) || "No se pudo guardar el producto.");
+                }
+                return data;
+            }))
+            .then(() => {
+                dialog.close();
+                alert("Producto agregado correctamente.");
+                fetchProductos();
+            })
+            .catch(error => {
+                mensaje.textContent = error.message || "Ocurrió un error al guardar el producto.";
+                botonGuardar.disabled = false;
+                botonCancelar.disabled = false;
+            });
     });
 
     document.body.appendChild(dialog);

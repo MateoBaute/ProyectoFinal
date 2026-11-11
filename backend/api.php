@@ -106,7 +106,7 @@ function nuevoProducto($nombre, $descripcion, $precio, $stock){
     $conn = conectar();
 
     $stmt = $conn->prepare(
-        "INSERT INTO productos(nombre, descripción, precio, stock) 
+        "INSERT INTO productos(nombre, descripcion, precio, stock) 
          VALUES (?, ?, ?, ?)"
     );
 
