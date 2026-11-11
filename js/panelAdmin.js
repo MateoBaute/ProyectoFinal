@@ -342,8 +342,21 @@ function agregarProducto() {
 }
 
 function eliminarProducto(id) {
-    //Lógica de eliminar producto
-    alert(`Se eliminará el producto con ID: ${id}`);
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=eliminar_producto&id=${id}`;
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("No se pudo eliminar el producto.");
+            }
+            return response.json();
+        })
+        .then(() => {
+            alert("Producto eliminado correctamente.");
+            fetchProductos();
+        })
+        .catch(error => {
+            alert(error.message || "Ocurrió un error al eliminar el producto.");
+        });
 }
 
 function fetchUsuarios() {
