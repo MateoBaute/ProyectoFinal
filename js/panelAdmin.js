@@ -73,7 +73,86 @@ function mostrarRutinas(rutinas) {
 }
 
 function agregarRutina() {
-    alert("Función para agregar rutina aún no implementada.");
+    const dialog = document.createElement("dialog");
+    dialog.classList.add("routine-dialog");
+
+    const ejercicios = Array.from({ length: 5 }, (_, index) => {
+        const numero = index + 1;
+        return `
+            <fieldset>
+                <legend>Ejercicio ${numero}</legend>
+                <label>
+                    Nombre
+                    <input name="ejercicio${numero}" type="text" maxlength="45" required>
+                </label>
+                <label>
+                    Series
+                    <input name="series${numero}" type="number" min="1" required>
+                </label>
+                <label>
+                    Repeticiones
+                    <input name="reps${numero}" type="number" min="1" required>
+                </label>
+            </fieldset>
+        `;
+    }).join("");
+
+    dialog.innerHTML = `
+        <form class="routine-form">
+            <h2>Nueva rutina</h2>
+            <label>
+                Nombre de la rutina
+                <input name="nombre" type="text" maxlength="45" required>
+            </label>
+            <label>
+                Nivel
+                <input name="nivel" type="text" maxlength="45" required>
+            </label>
+            ${ejercicios}
+            <p class="form-message" role="alert" aria-live="polite"></p>
+            <div class="form-actions">
+                <button class="btn-cancel" type="button">Cancelar</button>
+                <button class="btn-admin" type="submit">Guardar rutina</button>
+            </div>
+        </form>
+    `;
+
+    const form = dialog.querySelector("form");
+    const mensaje = dialog.querySelector(".form-message");
+    const botonCancelar = dialog.querySelector(".btn-cancel");
+    const botonGuardar = form.querySelector('button[type="submit"]');
+
+    botonCancelar.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", () => dialog.remove(), { once: true });
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+        mensaje.textContent = "";
+        botonGuardar.disabled = true;
+        botonCancelar.disabled = true;
+
+        const parametros = new URLSearchParams(new FormData(form));
+        parametros.set("action", "agregar_rutina");
+
+        try {
+            const response = await fetch(`http://localhost/ProyectoFinal/backend/index.php?${parametros}`);
+            const data = await response.json();
+
+            if (!response.ok || data !== true) {
+                throw new Error(data.error || "No se pudo guardar la rutina.");
+            }
+
+            dialog.close();
+            fetchRutinas();
+        } catch (error) {
+            mensaje.textContent = error.message || "Ocurrió un error al guardar la rutina.";
+            botonGuardar.disabled = false;
+            botonCancelar.disabled = false;
+        }
+    });
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
 }
 
 function eliminarRutina(id) {
@@ -136,7 +215,71 @@ function mostrarProductos(productos) {
 }
 
 function agregarProducto() {
-    alert("Función para agregar producto aún no implementada.");
+    const dialog = document.createElement("dialog");
+    dialog.classList.add("routine-dialog");
+    dialog.innerHTML = `
+        <form class="routine-form">
+            <h2>Nuevo producto</h2>
+            <label>
+                Nombre
+                <input name="nombre" type="text" maxlength="45" required>
+            </label>
+            <label>
+                Descripción
+                <input name="descripcion" type="text" required>
+            </label>
+            <label>
+                Precio
+                <input name="precio" type="number" min="0.01" step="0.01" required>
+            </label>
+            <label>
+                Stock
+                <input name="stock" type="number" min="0" step="1" required>
+            </label>
+            <p class="form-message" role="alert" aria-live="polite"></p>
+            <div class="form-actions">
+                <button class="btn-cancel" type="button">Cancelar</button>
+                <button class="btn-admin" type="submit">Guardar producto</button>
+            </div>
+        </form>
+    `;
+
+    const form = dialog.querySelector("form");
+    const mensaje = dialog.querySelector(".form-message");
+    const botonCancelar = dialog.querySelector(".btn-cancel");
+    const botonGuardar = form.querySelector('button[type="submit"]');
+
+    botonCancelar.addEventListener("click", () => dialog.close());
+    dialog.addEventListener("close", () => dialog.remove(), { once: true });
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+        mensaje.textContent = "";
+        botonGuardar.disabled = true;
+        botonCancelar.disabled = true;
+
+        const parametros = new URLSearchParams(new FormData(form));
+        parametros.set("action", "nuevo_producto");
+
+        try {
+            const response = await fetch(`http://localhost/ProyectoFinal/backend/index.php?${parametros}`);
+            const data = await response.json();
+
+            if (!response.ok || data !== true) {
+                throw new Error(data.error || "No se pudo guardar el producto.");
+            }
+
+            dialog.close();
+            fetchProductos();
+        } catch (error) {
+            mensaje.textContent = error.message || "Ocurrió un error al guardar el producto.";
+            botonGuardar.disabled = false;
+            botonCancelar.disabled = false;
+        }
+    });
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
 }
 
 function eliminarProducto(id) {
