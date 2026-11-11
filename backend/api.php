@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/config/db.php';
-function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercicio2, $series2, $reps2, $ejercicio3, $series3, $reps3, $ejercicio4, $series4, $reps4, $ejercicio5, $series5, $reps5)
-{
+function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercicio2, $series2, $reps2, $ejercicio3, $series3, $reps3, $ejercicio4, $series4, $reps4, $ejercicio5, $series5, $reps5){
     $conn = conectar();
 
     $stmt = $conn->prepare(
@@ -22,8 +21,7 @@ function agregarRutina($nombre, $nivel, $ejercicio1, $series1, $reps1, $ejercici
     return $stmt->execute();
 }
 
-function obtenerRutinas()
-{
+function obtenerRutinas(){
     $conn = conectar();
     $sql = "SELECT * from rutinas";
 
@@ -32,8 +30,17 @@ function obtenerRutinas()
     return $res->fetch_all(MYSQLI_ASSOC);
 }
 
-function registrar($nombre, $email, $password)
-{
+function eliminarRutina($id){
+    $conn = conectar();
+    $sql = "DELETE FROM rutinas WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    return $stmt->execute();
+}
+
+function registrar($nombre, $email, $password){
     $conn = conectar();
 
     $stmtCheck = $conn->prepare("SELECT id FROM usuarios WHERE email = ?");
@@ -66,8 +73,7 @@ function registrar($nombre, $email, $password)
 }
 
 
-function login($email, $password)
-{
+function login($email, $password){
     $conn = conectar();
 
     $stmt = $conn->prepare("SELECT * FROM usuarios WHERE email = ?");
@@ -95,21 +101,83 @@ function login($email, $password)
     return ['success' => false, 'error' => 'Correo o contraseña incorrectos'];
 }
 
-function nuevoProducto($nombre, $descripcion, $precio, $stock){
+function guardarImagenProducto($archivo){
+    if (!$archivo || !isset($archivo['error'])) {
+        return ['success' => false, 'error' => 'Debes seleccionar una imagen para el producto.'];
+    }
+
+    if ($archivo['error'] !== UPLOAD_ERR_OK) {
+        $errores = [
+            UPLOAD_ERR_INI_SIZE => 'La imagen supera el tamaño máximo permitido por el servidor.',
+            UPLOAD_ERR_FORM_SIZE => 'La imagen supera el tamaño máximo permitido.',
+            UPLOAD_ERR_PARTIAL => 'La imagen no se recibió completa.',
+            UPLOAD_ERR_NO_FILE => 'Debes seleccionar una imagen para el producto.',
+            UPLOAD_ERR_NO_TMP_DIR => 'No está disponible la carpeta temporal para subir imágenes.',
+            UPLOAD_ERR_CANT_WRITE => 'No se pudo guardar temporalmente la imagen.',
+            UPLOAD_ERR_EXTENSION => 'El servidor rechazó la carga de la imagen.'
+        ];
+        return ['success' => false, 'error' => $errores[$archivo['error']] ?? 'Error al subir la imagen.'];
+    }
+
+    $maximoBytes = 5 * 1024 * 1024;
+    if ($archivo['size'] > $maximoBytes) {
+        return ['success' => false, 'error' => 'La imagen no puede superar los 5 MB.'];
+    }
+
+    if (!is_uploaded_file($archivo['tmp_name'])) {
+        return ['success' => false, 'error' => 'El archivo recibido no es una carga válida.'];
+    }
+
+    $extensionesPorMime = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/gif' => 'gif',
+        'image/webp' => 'webp'
+    ];
+    $finfo = finfo_open(FILEINFO_MIME_TYPE);
+    if (!$finfo) {
+        return ['success' => false, 'error' => 'No se pudo validar el formato de la imagen.'];
+    }
+
+    $mime = finfo_file($finfo, $archivo['tmp_name']);
+    finfo_close($finfo);
+    $datosImagen = getimagesize($archivo['tmp_name']);
+    if (!isset($extensionesPorMime[$mime]) || !$datosImagen || $datosImagen['mime'] !== $mime) {
+        return ['success' => false, 'error' => 'El archivo debe ser una imagen JPG, PNG, GIF o WEBP válida.'];
+    }
+
+    $directorio = __DIR__ . DIRECTORY_SEPARATOR . 'imgProds';
+    if (!is_dir($directorio) && !mkdir($directorio, 0755, true) && !is_dir($directorio)) {
+        return ['success' => false, 'error' => 'No se pudo crear la carpeta de imágenes de productos.'];
+    }
+
+    $nombreArchivo = bin2hex(random_bytes(10)) . '.' . $extensionesPorMime[$mime];
+    $destino = $directorio . DIRECTORY_SEPARATOR . $nombreArchivo;
+    if (!move_uploaded_file($archivo['tmp_name'], $destino)) {
+        return ['success' => false, 'error' => 'No se pudo guardar la imagen del producto.'];
+    }
+
+    return ['success' => true, 'path' => 'backend/imgProds/' . $nombreArchivo];
+}
+
+function nuevoProducto($nombre, $descripcion, $img, $precio, $stock){
 
     $conn = conectar();
 
     $stmt = $conn->prepare(
-        "INSERT INTO productos(nombre, descripción, precio, stock) 
-         VALUES (?, ?, ?, ?)"
+        "INSERT INTO productos(nombre, descripcion, img, precio, stock)
+         VALUES (?, ?, ?, ?, ?)"
     );
 
     $stmt->bind_param(
-        "ssdi",
-        $nombre, $descripcion, $precio, $stock
+        "sssdi",
+        $nombre, $descripcion, $img, $precio, $stock
     );
 
-    return $stmt->execute();
+    $resultado = $stmt->execute();
+    $stmt->close();
+    $conn->close();
+    return $resultado;
 }
 
 function obtenerProductos()
@@ -120,6 +188,16 @@ function obtenerProductos()
     $res = $conn->query($sql);
 
     return $res->fetch_all(MYSQLI_ASSOC);
+}
+
+function eliminarProducto($id){
+    $conn = conectar();
+    $sql = "DELETE FROM productos WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    return $stmt->execute();
 }
 
 function registrarCompra($usuario_id, $producto_id, $fecha){
