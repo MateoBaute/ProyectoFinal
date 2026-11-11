@@ -272,6 +272,10 @@ function agregarProducto() {
                 Stock
                 <input id="productoStock" name="stock" type="number" min="0" step="1" required>
             </label>
+            <label>
+                Imagen (JPG, PNG, GIF o WEBP; máximo 5 MB)
+                <input id="productoImg" name="img" type="file" accept="image/jpeg,image/png,image/gif,image/webp" required>
+            </label>
             <p class="form-message" role="alert" aria-live="polite"></p>
             <div class="form-actions">
                 <button class="btn-cancel" type="button">Cancelar</button>
@@ -291,6 +295,12 @@ function agregarProducto() {
     form.addEventListener("submit", event => {
         event.preventDefault();
         mensaje.textContent = "";
+        const imagen = document.getElementById("productoImg").files[0];
+        if (!imagen) {
+            mensaje.textContent = "Selecciona una imagen para el producto.";
+            return;
+        }
+
         botonGuardar.disabled = true;
         botonCancelar.disabled = true;
 
@@ -298,14 +308,17 @@ function agregarProducto() {
         const descripcion = document.getElementById("productoDescripcion").value;
         const precio = document.getElementById("productoPrecio").value;
         const stock = document.getElementById("productoStock").value;
+        const datos = new FormData();
+        datos.append("nombre", nombre);
+        datos.append("descripcion", descripcion);
+        datos.append("precio", precio);
+        datos.append("stock", stock);
+        datos.append("img", imagen);
 
-        const url = `http://localhost/ProyectoFinal/backend/index.php?action=nuevo_producto`
-            + `&nombre=${encodeURIComponent(nombre)}`
-            + `&descripcion=${encodeURIComponent(descripcion)}`
-            + `&precio=${encodeURIComponent(precio)}`
-            + `&stock=${encodeURIComponent(stock)}`;
-
-        fetch(url)
+        fetch("http://localhost/ProyectoFinal/backend/index.php?action=nuevo_producto", {
+            method: "POST",
+            body: datos
+        })
             .then(response => response.json().then(data => {
                 if (!response.ok || data !== true) {
                     throw new Error((data && data.error) || "No se pudo guardar el producto.");

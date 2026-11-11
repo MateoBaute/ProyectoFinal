@@ -23,8 +23,16 @@ function mostrarProductos(productos) {
             <h3>${producto.nombre}</h3>
             <p>${producto.descripcion}</p>
             <p>Precio: $${producto.precio}</p>
+            <p>Stock: ${producto.stock}</p>
             <button onclick="comprarProducto(${producto.id})">Comprar</button>
         `;
+        if (producto.img) {
+            const imagen = document.createElement("img");
+            imagen.src = `./${producto.img}`;
+            imagen.alt = `Imagen de ${producto.nombre}`;
+            imagen.classList.add("product-image");
+            productoDiv.prepend(imagen);
+        }
         contenedorProductos.appendChild(productoDiv);
     });
 }

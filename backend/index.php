@@ -73,16 +73,31 @@ switch ($action) {
         break;
 
     case 'nuevo_producto':
-        $nombre = $_GET['nombre'] ?? '';
-        $descripcion = $_GET['descripcion'] ?? '';
-        $precio = $_GET['precio'] ?? 0;
-        $stock = $_GET['stock'] ?? 0;
+        $nombre = $_POST['nombre'] ?? '';
+        $descripcion = $_POST['descripcion'] ?? '';
+        $precio = $_POST['precio'] ?? 0;
+        $stock = $_POST['stock'] ?? 0;
 
-        if ($nombre && $descripcion && $precio > 0 && $stock >= 0) {
-            echo json_encode(nuevoProducto($nombre, $descripcion, $precio, $stock));
-        } else {
-            http_response_code(400); 
+        if (!$nombre || !$descripcion || !is_numeric($precio) || $precio <= 0
+            || filter_var($stock, FILTER_VALIDATE_INT) === false || $stock < 0) {
+            http_response_code(400);
             echo json_encode(['success' => false, 'error' => 'Datos incompletos o inválidos']);
+            break;
+        }
+
+        $imagen = guardarImagenProducto($_FILES['img'] ?? null);
+        if (!$imagen['success']) {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => $imagen['error']]);
+            break;
+        }
+
+        if (nuevoProducto($nombre, $descripcion, $imagen['path'], $precio, $stock)) {
+            echo json_encode(true);
+        } else {
+            unlink(__DIR__ . DIRECTORY_SEPARATOR . 'imgProds' . DIRECTORY_SEPARATOR . basename($imagen['path']));
+            http_response_code(500);
+            echo json_encode(['success' => false, 'error' => 'No se pudo guardar el producto en la base de datos.']);
         }
         break;
 
