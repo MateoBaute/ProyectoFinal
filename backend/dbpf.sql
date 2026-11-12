@@ -2,15 +2,12 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
-
 CREATE TABLE `compras` (
   `id` int(11) NOT NULL,
   `usuario_id` int(11) NOT NULL,
   `producto_id` int(11) NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
-
 
 CREATE TABLE `productos` (
   `id` int(11) NOT NULL,
@@ -22,7 +19,6 @@ CREATE TABLE `productos` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 INSERT INTO `productos` (`id`, `nombre`, `descripcion`, `img`, `precio`, `stock`) VALUES
-
 (1, 'Camiseta Deportiva', 'Camiseta transpirable para entrenamiento', 'camiseta.jpg', 19.99, 50),
 (2, 'Pantalones de Yoga', 'Pantalones cómodos y elásticos para yoga', 'pantalones_yoga.jpg', 29.99, 30),
 (3, 'Zapatillas de Running', 'Zapatillas ligeras y resistentes para correr', 'zapatillas_running.jpg', 79.99, 20),
@@ -52,7 +48,7 @@ CREATE TABLE `rutinas` (
 
 INSERT INTO `rutinas` (`id`, `nombre`, `nivel`, `ejercicio1`, `series1`, `reps1`, `ejercicio2`, `series2`, `reps2`, `ejercicio3`, `series3`, `reps3`, `ejercicio4`, `series4`, `reps4`, `ejercicio5`, `series5`, `reps5`) VALUES
 (1, 'Full Body', 'Principiante', 'Sentadilla', 4, 12, 'Press de banca', 3, 10, 'Peso muerto', 3, 8, 'Press militar', 3, 10, 'Remo con barra', 3, 10),
-(2, 'Rutina Piernas', 'Intermedio', 'Sentadilla', 5, 10, 'Peso muerto', 4, 8, 'Zancadas', 3, 12, 'Prensa', 4, 10, 'Curl femoral', 3, 12),
+(2, 'Rutina Piernas', 'Intermedio', 'Sentadilla', 5, 10, 'Peso muerto', 4, 8, 'Zancadas', 3, 12, 'Prensa', 4, 10, 'Curl femoral', 3, 12);
 
 CREATE TABLE `usuarios` (
   `id` int(11) NOT NULL,
@@ -66,8 +62,7 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `nombre`, `email`, `contraseña`, `description`, `cv`, `admin`) VALUES
 (1, 'mateo baute', 'mateobaute10@gmail.com', '$2y$10$lTGKkBPoZrYUNzdHc4wSQefMDO202vg534vZPcCQCrnS3B09whoFq', 'YO', 'pamba', NULL),
-(2, 'admin', 'admin@gmail.com', '$2y$10$FsCZk3le0E2zpmyaRII6m.WRkXHZUeZbJM3vtiE.5ipQ.OANwlaGi', '', '', 1),
-
+(2, 'admin', 'admin@gmail.com', '$2y$10$FsCZk3le0E2zpmyaRII6m.WRkXHZUeZbJM3vtiE.5ipQ.OANwlaGi', '', '', 1);
 
 ALTER TABLE `compras`
   ADD PRIMARY KEY (`id`);
@@ -92,4 +87,5 @@ ALTER TABLE `rutinas`
 
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 COMMIT;

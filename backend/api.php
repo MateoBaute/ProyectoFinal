@@ -202,11 +202,36 @@ function eliminarProducto($id){
 
 function registrarCompra($usuario_id, $producto_id, $fecha){
     $conn = conectar();
-    $sql = "INSERT INTO compras(usuario_id, producto_id, fecha) VALUES (?, ?, ?)";
+    $conn->begin_transaction();
 
-    $stmt = $conn->prepare($sql);
-    $stmt ->bind_param("iis", $usuario_id, $producto_id, $fecha);
-    return $stmt->execute();
+    try {
+        $stmtStock = $conn->prepare("UPDATE productos SET stock = stock - 1 WHERE id = ? AND stock > 0");
+        $stmtStock->bind_param("i", $producto_id);
+        if (!$stmtStock->execute() || $stmtStock->affected_rows !== 1) {
+            $stmtStock->close();
+            $conn->rollback();
+            $conn->close();
+            return ['success' => false, 'error' => 'El producto no existe o no tiene stock disponible.'];
+        }
+        $stmtStock->close();
+
+        $stmtCompra = $conn->prepare("INSERT INTO compras(usuario_id, producto_id, fecha) VALUES (?, ?, ?)");
+        $stmtCompra->bind_param("iis", $usuario_id, $producto_id, $fecha);
+        if (!$stmtCompra->execute()) {
+            $stmtCompra->close();
+            $conn->rollback();
+            $conn->close();
+            return ['success' => false, 'error' => 'No se pudo registrar la compra.'];
+        }
+        $stmtCompra->close();
+        $conn->commit();
+        $conn->close();
+        return ['success' => true];
+    } catch (mysqli_sql_exception $error) {
+        $conn->rollback();
+        $conn->close();
+        return ['success' => false, 'error' => 'No se pudo registrar la compra.'];
+    }
 }
 
 function actualizarPerfil($usuario_id, $nombre, $email, $descripcion, $curriculum) {
