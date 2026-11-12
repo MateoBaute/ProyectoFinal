@@ -69,12 +69,20 @@ function comprarProducto(idProducto) {
                     const url = `http://localhost/ProyectoFinal/backend/index.php?action=comprar_producto&usuario_id=${user.id}&producto_id=${idProducto}`;
                     fetch(url)
                         .then(response => response.json())
-                        .then(data => {
-                            alert(`Muchas Gracias ${user.name}! Has comprado: ${prodFinal.nombre} por $${prodFinal.precio}`);
-                        });
+                        .then(resultado => {
+                            if (!resultado.success) {
+                                alert(resultado.error || "No se pudo completar la compra.");
+                                return;
+                            }
+
+                            alert(`Muchas Gracias ${user.nombre}! Has comprado: ${prodFinal.nombre} por $${prodFinal.precio}`);
+                            fetchProductos();
+                        })
+                        .catch(() => alert("No se pudo completar la compra. Inténtalo nuevamente."));
                 } else {
                     alert("El producto no existe en la lista.");
                 }
             }
-        });
+        })
+        .catch(() => alert("No se pudieron cargar los productos. Inténtalo nuevamente."));
 }
