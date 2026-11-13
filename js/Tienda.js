@@ -18,6 +18,9 @@ function mostrarProductos(productos) {
     const contenedorProductos = document.getElementById("contenedor-productos");
     contenedorProductos.innerHTML = "";
     productos.forEach(producto => {
+        if(producto.stock <= 0) {
+            return;
+        }
         const productoDiv = document.createElement("div");
         productoDiv.innerHTML = `
             <h3>${producto.nombre}</h3>
