@@ -144,6 +144,18 @@ switch ($action) {
         echo json_encode(obtenerUsuarios());
         break;
 
+    case 'reponer_stock':
+        $id = (int)($_GET['id'] ?? 0);
+        $cantidad = (int)($_GET['cantidad'] ?? 0);
+
+        if ($id > 0 && $cantidad > 0) {
+            echo json_encode(reponerStock($id, $cantidad));
+        } else {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'ID o cantidad inválidos']);
+        }
+        break;
+
     default:
         http_response_code(404); 
         echo json_encode(['success' => false, 'error' => 'Acción no válida']);

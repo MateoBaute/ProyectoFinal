@@ -200,6 +200,25 @@ function eliminarProducto($id){
     return $stmt->execute();
 }
 
+function reponerStock($id, $cantidad){
+    $conn = conectar();
+
+    // Suma la cantidad al stock que ya tiene el producto
+    $stmt = $conn->prepare("UPDATE productos SET stock = stock + ? WHERE id = ?");
+    $stmt->bind_param("ii", $cantidad, $id);
+    $stmt->execute();
+    $ok = $stmt->affected_rows === 1;
+
+    $stmt->close();
+    $conn->close();
+
+    if ($ok) {
+        return ['success' => true];
+    }
+
+    return ['success' => false, 'error' => 'El producto no existe.'];
+}
+
 function registrarCompra($usuario_id, $producto_id, $fecha){
     $conn = conectar();
     $conn->begin_transaction();

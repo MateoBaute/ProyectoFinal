@@ -227,7 +227,6 @@ function mostrarProductos(productos) {
     const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
 
-    
     const contenedorBoton = document.getElementById("btns");
     contenedorBoton.innerHTML = "";
     const btnAgregarProducto = document.createElement("button");
@@ -239,25 +238,16 @@ function mostrarProductos(productos) {
 
     productos.forEach(producto => {
         const card = document.createElement("div");
-
-        let listaProductos = "";
-
-        for (let i = 1; i <= 5; i++) {
-            const nombreProducto = producto[`producto${i}`];
-            const cantidad = producto[`cantidad${i}`];
-
-            if (nombreProducto) {
-                listaProductos += `<li>${nombreProducto}: ${cantidad}</li>`;
-            }
-        }
+        // card.classList.add("product-card");
 
         card.innerHTML = `
             <h2>${producto.nombre}</h2>
             <p>${producto.descripcion}</p>
-            <ul>
-                ${listaProductos}
-            </ul>
-            <button onclick="eliminarProducto(${producto.id})">Eliminar</button>
+            <p>Precio: $${producto.precio}</p>
+            <p>Stock actual: ${producto.stock}</p>
+            <input type="number" id="reponer${producto.id}" min="1" step="1" placeholder="Cantidad a agregar">
+                <button class="btn-admin" onclick="reponerStock(${producto.id})">Reponer stock</button>
+                <button class="btn-admin" onclick="eliminarProducto(${producto.id})">Eliminar</button>
         `;
         contenedor.appendChild(card);
     });
@@ -369,6 +359,31 @@ function eliminarProducto(id) {
         })
         .catch(error => {
             alert(error.message || "Ocurrió un error al eliminar el producto.");
+        });
+}
+
+function reponerStock(id) {
+    const cantidad = document.getElementById(`reponer${id}`).value;
+
+    if (!Number.isInteger(Number(cantidad)) || Number(cantidad) < 1) {
+        alert("Ingresá una cantidad entera mayor a 0.");
+        return;
+    }
+
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=reponer_stock&id=${id}&cantidad=${cantidad}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert("Stock repuesto correctamente.");
+                fetchProductos();
+            } else {
+                alert(data.error || "No se pudo reponer el stock.");
+            }
+        })
+        .catch(() => {
+            alert("Ocurrió un error al reponer el stock.");
         });
 }
 
