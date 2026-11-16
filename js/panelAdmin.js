@@ -417,7 +417,7 @@ function mostrarUsuarios(usuarios) {
 
     
     if(usuarios.length === 0 || !usuarios.some(usuario => usuario.cv && !usuario.admin)) {
-        contenedor.innerHTML = "<p>No hay usuarios disponibles.</p>";
+        contenedor.innerHTML = "<p>No hay usuarios disponibles con cv asignado.</p>";
         return;
     }
     
