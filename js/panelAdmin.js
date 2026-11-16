@@ -35,6 +35,11 @@ function mostrarRutinas(rutinas) {
     const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
 
+    if(rutinas.length === 0) {
+        contenedor.innerHTML = "<p>No hay rutinas disponibles.</p>";
+        return;
+    }
+
     const contenedorBoton = document.getElementById("btns");
     contenedorBoton.innerHTML = "";
     const btnAgregarRutina = document.createElement("button");
@@ -226,6 +231,10 @@ function fetchProductos() {
 function mostrarProductos(productos) {
     const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
+    if(productos.length === 0) {
+        contenedor.innerHTML = "<p>No hay productos disponibles.</p>";
+        return;
+    }
 
     const contenedorBoton = document.getElementById("btns");
     contenedorBoton.innerHTML = "";
@@ -407,7 +416,7 @@ function mostrarUsuarios(usuarios) {
     contenedorBoton.innerHTML = "";
 
     
-    if(usuarios.length === 0) {
+    if(usuarios.length === 0 || !usuarios.some(usuario => usuario.cv && !usuario.admin)) {
         contenedor.innerHTML = "<p>No hay usuarios disponibles.</p>";
         return;
     }
