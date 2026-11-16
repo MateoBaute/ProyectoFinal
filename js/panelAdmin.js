@@ -35,6 +35,11 @@ function mostrarRutinas(rutinas) {
     const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
 
+    if(rutinas.length === 0) {
+        contenedor.innerHTML = "<p>No hay rutinas disponibles.</p>";
+        return;
+    }
+
     const contenedorBoton = document.getElementById("btns");
     contenedorBoton.innerHTML = "";
     const btnAgregarRutina = document.createElement("button");
@@ -226,6 +231,10 @@ function fetchProductos() {
 function mostrarProductos(productos) {
     const contenedor = document.getElementById("contenido");
     contenedor.innerHTML = "";
+    if(productos.length === 0) {
+        contenedor.innerHTML = "<p>No hay productos disponibles.</p>";
+        return;
+    }
 
     const contenedorBoton = document.getElementById("btns");
     contenedorBoton.innerHTML = "";
@@ -407,7 +416,7 @@ function mostrarUsuarios(usuarios) {
     contenedorBoton.innerHTML = "";
 
     
-    if(usuarios.length === 0) {
+    if(usuarios.length === 0 || !usuarios.some(usuario => usuario.cv && !usuario.admin)) {
         contenedor.innerHTML = "<p>No hay usuarios disponibles.</p>";
         return;
     }
@@ -424,4 +433,59 @@ function mostrarUsuarios(usuarios) {
             contenedor.appendChild(card);
         }
     });
+}
+
+function fetchCompras() {
+    setActiveSection("compras");
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=obtener_compras`;
+    fetch(url)
+        .then(response => response.json())  
+        .then(data => {
+            compras = data;
+            mostrarCompras(compras);
+        });
+}
+
+function mostrarCompras(compras) {
+    const contenedor = document.getElementById("contenido");
+    const contenedorBoton = document.getElementById("btns");
+    contenedorBoton.innerHTML = "";
+    contenedor.innerHTML = "";
+
+    if(compras.length === 0) {
+        contenedor.innerHTML = "<p>No hay compras disponibles.</p>";
+        return;
+    }
+
+    compras.forEach(compra => {
+        const card = document.createElement("div");
+        card.innerHTML = ` <h2>Compra ID: ${compra.id}</h2>
+            <p>Usuario: ${compra.usuario_nombre}</p>
+            <p>Producto: ${compra.producto_nombre}</p>
+            <p>Fecha: ${compra.fecha}</p>
+            <button onclick="eliminarCompra(${compra.id})">Eliminar</button>
+        `;
+        contenedor.appendChild(card);
+    });
+}
+
+function eliminarCompra(id) {
+    if(!confirm("¿Estás seguro de que deseas eliminar esta compra? Esta acción no se puede deshacer.")) {
+        return;
+    }
+    const url = `http://localhost/ProyectoFinal/backend/index.php?action=eliminar_compra&id=${id}`;
+    fetch(url)
+        .then(response => {
+            if (!response.ok) { 
+                throw new Error("No se pudo eliminar la compra.");
+            }
+            return response.json();
+        })
+        .then(() => {
+            alert("Compra eliminada correctamente.");
+            fetchCompras();
+        })
+        .catch(error => {
+            alert(error.message || "Ocurrió un error al eliminar la compra.");
+        });
 }
