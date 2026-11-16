@@ -275,4 +275,26 @@ function obtenerUsuarios() {
 
     return $res->fetch_all(MYSQLI_ASSOC);
 }
+
+function obtenerCompras() {
+    $conn = conectar();
+    $sql = "SELECT c.id, c.usuario_id, c.producto_id, c.fecha, u.nombre AS usuario_nombre, p.nombre AS producto_nombre
+            FROM compras c
+            JOIN usuarios u ON c.usuario_id = u.id
+            JOIN productos p ON c.producto_id = p.id";
+
+    $res = $conn->query($sql);
+
+    return $res->fetch_all(MYSQLI_ASSOC);
+}
+
+function eliminarCompra($id) {
+    $conn = conectar();
+    $sql = "DELETE FROM compras WHERE id = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $id);
+
+    return $stmt->execute();
+}
 ?>

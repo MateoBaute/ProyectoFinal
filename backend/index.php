@@ -155,6 +155,20 @@ switch ($action) {
             echo json_encode(['success' => false, 'error' => 'ID o cantidad inválidos']);
         }
         break;
+    
+    case 'obtener_compras':
+        echo json_encode(obtenerCompras());
+        break;
+
+    case 'eliminar_compra':
+        $id = (int)($_GET['id'] ?? 0);
+        if ($id > 0) {
+            echo json_encode(eliminarCompra($id));
+        } else {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'ID de compra inválido']);
+        }
+        break;
 
     default:
         http_response_code(404); 
